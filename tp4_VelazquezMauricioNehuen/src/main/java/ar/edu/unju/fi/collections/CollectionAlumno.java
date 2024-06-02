@@ -1,0 +1,76 @@
+package ar.edu.unju.fi.collections;
+
+
+import ar.edu.unju.fi.model.Alumno;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+
+public class CollectionAlumno {
+
+    private static List<Alumno> alumnos = new ArrayList<>();
+
+    /**
+     * Devuelve un arrayList de objetos de la clase Alumno
+     * @return Objeto alumno
+     */
+    public static List<Alumno> getAlumnos() {
+        if(alumnos.isEmpty()){
+            alumnos.add(new Alumno("40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
+                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "4853"));
+            alumnos.add(new Alumno("40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
+                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "8363"));
+            alumnos.add(new Alumno("40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
+                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "1234"));
+        }
+        return alumnos;
+    }
+
+    /**
+     * Agrega un objeto de la clase Alumno al arrayList
+     * @param alumno Objeto de la clase Alumno
+     */
+    public static void agregarAlumno(Alumno alumno) {
+        alumnos.add(alumno);
+    }
+
+    /**
+     * Elimina un objeto de la clase Alumno en el arrayList
+     * @param dni Objeto de la clase Alumno con atributos modificados
+     */
+    public static void eliminarAlumno(String dni) {
+        alumnos.removeIf(alumno -> alumno.getDni().equals(dni));
+    }
+
+    /**
+     * Modifica un objeto de la clase Alumno en el arrayList
+     * @param alumno Objeto de la clase Alumno
+     */
+    public static void modificarAlumno(Alumno alumno) {
+        for (Alumno a : alumnos) {
+            if (a.getDni().equals(alumno.getDni())) {
+                a.setNombre(alumno.getNombre());
+                a.setApellido(alumno.getApellido());
+                a.setEmail(alumno.getEmail());
+                a.setTelefono(alumno.getTelefono());
+                a.setFechaNacimiento(alumno.getFechaNacimiento());
+                a.setDomicilio(alumno.getDomicilio());
+                a.setLu(alumno.getLu());
+            }
+        }
+    }
+
+    /**
+     * Busca un objeto de la clase Alumno en el arrayList
+     * @param dni Objeto de la clase Alumno
+     * @return Objeto de la clase Alumno
+     */
+    public static Alumno buscarAlumno(String dni) {
+        Predicate<Alumno> filterCodigo = alumno -> alumno.getDni().equals(dni);
+        Optional<Alumno> alumno = alumnos.stream().filter(filterCodigo).findFirst();
+        return alumno.orElse(null);
+    }
+}
