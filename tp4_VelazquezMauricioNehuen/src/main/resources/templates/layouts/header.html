@@ -11,21 +11,22 @@
             <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
                 <div class="container">
                     <div class="d-none d-sm-block" style="max-width: 250px">
-                        <img src="/images/logo-fi-unju.png"  alt="fi-unju logo" style="width: 100%" />
+                        <img src="/images/logo-fi-unju.png" alt="fi-unju logo" style="width: 100%"/>
                     </div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse p-4 justify-content-end" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Inicio</a>
+                                <a class="nav-link" th:href="@{/}">Inicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Acerca de</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Carreras</a>
+                                <a class="nav-link" th:href="@{/carreras/listado}">Carreras</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#noticias">Noticias</a>
