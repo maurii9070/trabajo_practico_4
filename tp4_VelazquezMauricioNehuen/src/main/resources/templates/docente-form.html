@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head data-th-replace="~{/layouts/header :: head}">
+    </head>
+    <body>
+        <header data-th-replace="~{/layouts/header :: header}"></header>
+
+        <section class="container">
+            <h2
+                class="text-center my-5"
+                th:text="${edicion ? 'Modificar Docente' : 'Nuevo Docente'}"
+            ></h2>
+            <div class="mx-auto" style="max-width: 576px">
+                <form
+                    th:action="${edicion} ? '/docentes/modificar-docente' : '/docentes/guardar-docente'"
+                    th:object="${docente}"
+                    method="post"
+                >
+                    <div class="mb-3">
+                        <label for="codigo" class="form-label">Legajo</label>
+                        <input
+                            type="text"
+                            th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
+                            id="codigo"
+                            name="codigo"
+                            required
+                            th:field="*{legajo}"
+                            th:readonly="${edicion}"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="nombre"
+                            name="nombre"
+                            required
+                            th:field="*{nombre}"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="apellido"
+                            name="apellido"
+                            required
+                            th:field="*{apellido}"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            required
+                            th:field="*{email}"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="telefono"
+                            name="telefono"
+                            required
+                            th:field="*{telefono}"
+                        >
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        th:text="${edicion ? 'Modificar' : 'Guardar'}"
+                    >
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer data-th-replace="~{/layouts/footer :: footer}"></footer>
+
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>
