@@ -15,22 +15,24 @@ public class CollectionAlumno {
 
     /**
      * Devuelve un arrayList de objetos de la clase Alumno
+     *
      * @return Objeto alumno
      */
     public static List<Alumno> getAlumnos() {
-        if(alumnos.isEmpty()){
+        if (alumnos.isEmpty()) {
             alumnos.add(new Alumno("40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
-                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "4853"));
+                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853"));
             alumnos.add(new Alumno("40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
-                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "8363"));
+                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "APU8363"));
             alumnos.add(new Alumno("40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
-                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "1234"));
+                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "APU1234"));
         }
         return alumnos;
     }
 
     /**
      * Agrega un objeto de la clase Alumno al arrayList
+     *
      * @param alumno Objeto de la clase Alumno
      */
     public static void agregarAlumno(Alumno alumno) {
@@ -39,6 +41,7 @@ public class CollectionAlumno {
 
     /**
      * Elimina un objeto de la clase Alumno en el arrayList
+     *
      * @param dni Objeto de la clase Alumno con atributos modificados
      */
     public static void eliminarAlumno(String dni) {
@@ -47,6 +50,7 @@ public class CollectionAlumno {
 
     /**
      * Modifica un objeto de la clase Alumno en el arrayList
+     *
      * @param alumno Objeto de la clase Alumno
      */
     public static void modificarAlumno(Alumno alumno) {
@@ -65,6 +69,7 @@ public class CollectionAlumno {
 
     /**
      * Busca un objeto de la clase Alumno en el arrayList
+     *
      * @param dni Objeto de la clase Alumno
      * @return Objeto de la clase Alumno
      */
