@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/carreras")
@@ -54,6 +55,7 @@ public class CarreraController {
         carrera.setEstado(true);
         CollectionCarrera.agregarCarrera(carrera);
         modelView.addObject("carreras", CollectionCarrera.getCarreras());
+        modelView.addObject("isAdded", true);
         return modelView;
     }
 
@@ -72,8 +74,6 @@ public class CarreraController {
         model.addAttribute("titulo", "Carreras");
         model.addAttribute("edicion", edicion);
         model.addAttribute("carrera", carreraEncontrada);
-        System.out.println(codigo);
-        System.out.println(carreraEncontrada);
         return "carrera-form";
     }
 
@@ -84,9 +84,9 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/modificar-carrera")
-    public String editarCarrera(@ModelAttribute("carrera") Carrera carrera) {
-        System.out.println(carrera);
+    public String editarCarrera(@ModelAttribute("carrera") Carrera carrera, RedirectAttributes redirectAttributes) {
         CollectionCarrera.modificarCarrera(carrera);
+        redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/carreras/listado";
     }
 
