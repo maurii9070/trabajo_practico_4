@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head data-th-replace="~{/layouts/header :: head}">
+    </head>
+    <body>
+        <header data-th-replace="~{/layouts/header :: header}"></header>
+
+        <section class="container">
+            <h2
+                class="text-center my-5"
+                th:text="${edicion ? 'Modificar Materia' : 'Nueva Materia'}"
+            ></h2>
+            <div class="mx-auto" style="max-width: 576px">
+                <form
+                    th:action="${edicion} ? '/materias/modificar-materia' : '/materias/guardar-materia'"
+                    th:object="${materia}"
+                    method="post"
+                >
+                    <div class="mb-3">
+                        <label for="codigo" class="form-label">Codigo</label>
+                        <input
+                            type="text"
+                            th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
+                            id="codigo"
+                            name="codigo"
+                            required
+                            th:field="*{codigo}"
+                            th:readonly="${edicion}"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="nombre"
+                            name="nombre"
+                            required
+                            th:field="*{nombre}"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="carrera" class="form-label">Carrera</label>
+                        <select
+                            class="form-select"
+                            id="carrera"
+                            name="carrera"
+                            required
+                            th:field="*{carrera.codigo}"
+                        >
+                            <option value="">-- Seleccione una carrera --</option>
+                            <option
+                                th:each="carrera : ${carreras}"
+                                th:text="${carrera.nombre}"
+                                th:value="${carrera.codigo}"
+                            ></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="curso" class="form-label">Curso</label>
+                        <select
+                            class="form-select"
+                            id="curso"
+                            name="curso"
+                            required
+                            th:field="*{curso}"
+                        >
+                            <option value="" selected>-- Seleccione un Curso --</option>
+                            <option value="PRIMERO">Primero</option>
+                            <option value="SEGUNDO">Segundo</option>
+                            <option value="TERCERO">Tercero</option>
+                            <option value="CUARTO">Cuarto</option>
+                            <option value="QUINTO">Quinto</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="horas" class="form-label">Cant. Horas</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="horas"
+                            name="horas"
+                            min="1"
+                            required
+                            th:field="*{cantidadHoras}"
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalidad" class="form-label">Modalidad</label>
+                        <select
+                            class="form-select"
+                            id="modalidad"
+                            name="modalidad"
+                            required
+                            th:field="${materia.modalidad}"
+                        >
+                            <option value="">-- Seleccione una modalidad --</option>
+                            <option value="presencial">Presencial</option>
+                            <option value="virtual">Virtual</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="docentes" class="form-label">Docente</label>
+                        <select
+                            class="form-select"
+                            id="docentes"
+                            name="docentes"
+                            required
+                            th:field="*{docente.legajo}"
+                        >
+                            <option value="">-- Seleccione una modalidad --</option>
+                            <option
+                                th:each="docente : ${docentes}"
+                                th:value="${docente.legajo}"
+                                th:text="${docente.apellido} + ' ' + ${docente.nombre}"
+                                th:selected="${materia.docente}"
+                            ></option>
+                        </select>
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        th:text="${edicion ? 'Modificar' : 'Guardar'}"
+                    >
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer data-th-replace="~{/layouts/footer :: footer}"></footer>
+
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    </body>
+</html>
