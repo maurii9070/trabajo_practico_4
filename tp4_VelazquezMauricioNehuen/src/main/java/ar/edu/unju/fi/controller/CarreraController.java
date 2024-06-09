@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/carreras")
@@ -53,6 +54,7 @@ public class CarreraController {
         ModelAndView modelView = new ModelAndView("carreras");
         carrera.setEstado(true);
         CollectionCarrera.agregarCarrera(carrera);
+        modelView.addObject("isAdded", true);
         modelView.addObject("carreras", CollectionCarrera.getCarreras());
         return modelView;
     }
@@ -84,9 +86,10 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/modificar-carrera")
-    public String editarCarrera(@ModelAttribute("carrera") Carrera carrera) {
+    public String editarCarrera(@ModelAttribute("carrera") Carrera carrera, RedirectAttributes redirectAttributes) {
         System.out.println(carrera);
         CollectionCarrera.modificarCarrera(carrera);
+        redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/carreras/listado";
     }
 
