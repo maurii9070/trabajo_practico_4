@@ -14,40 +14,32 @@ public class CollectionMateria {
 
     /**
      * Devuelve un arrayList de objetos de la clase Materia
+     *
      * @return Objeto materia
      */
     public static List<Materia> getMaterias() {
-        if(materias.isEmpty()) {
-            materias.add(new Materia("Programación I", "PRO001", "1er Año", (byte) 4,
-                    "Presencial", null, null));
-            materias.add(new Materia("Fisica 1", "FIS001", "1do Año", (byte) 6,
-                    "Presencial", null, null));
-            materias.add(new Materia("Algebra 1", "ALG001", "1er Año", (byte) 4,
-                    "Presencial", null, null));
-            materias.add(new Materia("Ingles V", "ING001", "3er Año", (byte) 4,
-                    "Presencial", null, null));
-            materias.add(new Materia("POO", "POO005", "2do Año", (byte) 4,
-                    "Presencial", null, null));
-        }
         return materias;
     }
 
     /**
      * Agrega un objeto de la clase Materia al arrayList
+     *
      * @param materia Objeto de la clase Materia
      */
-    public static void agregarMateria(Materia materia) {
+    public static boolean agregarMateria(Materia materia) {
         materias.add(materia);
+        return true;
     }
 
     /**
      * Elimina un objeto de la clase Materia en el arrayList
+     *
      * @param codigoMateria Objeto de la clase Materia con atributos modificados
      */
     public static void eliminarMateria(String codigoMateria) {
         Iterator<Materia> iterator = materias.iterator();
-        while(iterator.hasNext()) {
-            if(iterator.next().getCodigo().equals(codigoMateria)) {
+        while (iterator.hasNext()) {
+            if (iterator.next().getCodigo().equals(codigoMateria)) {
                 iterator.remove();
             }
         }
@@ -55,6 +47,7 @@ public class CollectionMateria {
 
     /**
      * Modifica un objeto de la clase Materia en el arrayList
+     *
      * @param materia Objeto de la clase Materia
      */
     public static void modificarMateria(Materia materia) {
@@ -72,6 +65,7 @@ public class CollectionMateria {
 
     /**
      * Busca un objeto de la clase Materia en el arrayList
+     *
      * @param codigoMateria Objeto de la clase Materia con atributos modificados
      * @return Objeto de la clase Materia
      */
@@ -80,7 +74,6 @@ public class CollectionMateria {
         Optional<Materia> materia = materias.stream().filter(filterCodigo).findFirst();
         return materia.orElse(null);
     }
-
 
 
 }
