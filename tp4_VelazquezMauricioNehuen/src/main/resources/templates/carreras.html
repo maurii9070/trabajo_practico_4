@@ -11,13 +11,6 @@
             <div class="d-flex justify-content-end mb-2">
                 <a th:href="@{/carreras/nueva-carrera}" class="btn btn-primary">Nueva Carrera</a>
             </div>
-            <div th:if="${isAdded}" id="alert" class="alert alert-success" role="alert">
-                Materia agregada correctamente
-            </div>
-
-            <div th:if="${isUpdated}" id="alertEdit" class="alert alert-primary" role="alert">
-                Materia modificada correctamente
-            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -49,9 +42,8 @@
                                 class="btn btn-warning"
                             >Editar</a>
                             <a
-                                th:data-codigo="${carrera.codigo}"
+                                th:href="@{'/carreras/eliminar-carrera/' + ${carrera.codigo}}"
                                 class="btn btn-danger"
-                                onclick="confirmDelete(this.getAttribute('data-codigo'))"
                             >Eliminar</a>
                         </td>
                     </tr>
@@ -61,27 +53,6 @@
 
         <footer data-th-replace="~{/layouts/footer :: footer}"></footer>
 
-        <script>
-            /**
-             * Confirmar eliminación de una carrera
-             * @param codigo
-             */
-            function confirmDelete(codigo) {
-                if (confirm('¿Está seguro que desea eliminar la carrera de codigo: ' + codigo + '?')) {
-                    window.location.href = '/carreras/eliminar-carrera/' + codigo;
-                }
-            }
-
-            // Ocultar alerta de éxito
-            setTimeout(() => {
-                document.getElementById('alert').style.display = 'none';
-            }, 3000);
-
-            // Ocultar alerta de edicion
-            setTimeout(() => {
-                document.getElementById('alertEdit').style.display = 'none';
-            }, 3000);
-        </script>
         <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     </body>
 </html>
