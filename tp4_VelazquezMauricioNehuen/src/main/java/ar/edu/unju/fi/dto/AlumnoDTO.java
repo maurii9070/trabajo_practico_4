@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 public class AlumnoDTO {
 
     private String dni;

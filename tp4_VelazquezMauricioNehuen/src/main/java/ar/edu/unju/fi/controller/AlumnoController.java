@@ -1,7 +1,10 @@
 package ar.edu.unju.fi.controller;
 
 import ar.edu.unju.fi.collections.CollectionAlumno;
+import ar.edu.unju.fi.dto.AlumnoDTO;
 import ar.edu.unju.fi.model.Alumno;
+import ar.edu.unju.fi.service.IAlumnoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/alumnos")
 public class AlumnoController {
     @Autowired
-    private Alumno alumno;
+    private AlumnoDTO alumnoDTO;
 
+    @Autowired
+    private IAlumnoService alumnoService;
+    
     /**
      * Metodo que permite mostrar la pagina de alumnos
      *
@@ -24,7 +30,7 @@ public class AlumnoController {
     @GetMapping("/listado")
     public String getAlumnosPage(Model model) {
         model.addAttribute("titulo", "Alumnos");
-        model.addAttribute("alumnos", CollectionAlumno.getAlumnos());
+        model.addAttribute("alumnos", alumnoService.findAll());
         return "alumnos";
     }
 
@@ -39,7 +45,7 @@ public class AlumnoController {
         boolean edicion = false;
         model.addAttribute("titulo", "Nuevo Alumno");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("alumno", alumno);
+        model.addAttribute("alumno", alumnoDTO);
         return "alumno-form";
     }
 
@@ -50,12 +56,14 @@ public class AlumnoController {
      * @return la vista alumnos.html
      */
     @PostMapping("/guardar-alumno")
-    public ModelAndView guardarAlumno(@ModelAttribute("carrera") Alumno alumno) {
+    public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
         ModelAndView modelView = new ModelAndView("alumnos");
-        CollectionAlumno.agregarAlumno(alumno);
-        modelView.addObject("alumnos", CollectionAlumno.getAlumnos());
-        modelView.addObject("titulo", "Alumnos");
-        modelView.addObject("isAdded", true);
+        if (alumnoService.save(alumnoDTO)) {
+        	modelView.addObject("alumnos", alumnoService.findAll());
+            modelView.addObject("titulo", "Alumnos");
+            modelView.addObject("isAdded", true);
+        }
+        
         return modelView;
     }
 
@@ -69,8 +77,8 @@ public class AlumnoController {
     @GetMapping("/editar-alumno/{dni}")
     public String getEditarAlumnoPage(Model model, @PathVariable(value = "dni") String dni) {
         boolean edicion = true;
-        Alumno alumnoEncontrado = new Alumno();
-        alumnoEncontrado = CollectionAlumno.buscarAlumno(dni);
+        AlumnoDTO alumnoEncontrado = new AlumnoDTO();
+        alumnoEncontrado = alumnoService.findById(dni);
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
         model.addAttribute("alumno", alumnoEncontrado);
@@ -86,8 +94,8 @@ public class AlumnoController {
      * @return la vista alumnos.html
      */
     @PostMapping("modificar-alumno")
-    public String editarAlumno(@ModelAttribute("carrera") Alumno alumno, RedirectAttributes redirectAttributes) {
-        CollectionAlumno.modificarAlumno(alumno);
+    public String editarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO, RedirectAttributes redirectAttributes) {
+        alumnoService.edit(alumnoDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/alumnos/listado";
     }
@@ -100,7 +108,7 @@ public class AlumnoController {
      */
     @GetMapping("/eliminar-alumno/{dni}")
     public String eliminarAlumno(@PathVariable(value = "dni") String dni) {
-        CollectionAlumno.eliminarAlumno(dni);
+        alumnoService.deleteById(dni);
         return "redirect:/alumnos/listado";
     }
 }

@@ -2,11 +2,18 @@ package ar.edu.unju.fi.mapper;
 
 import ar.edu.unju.fi.dto.AlumnoDTO;
 import ar.edu.unju.fi.model.Alumno;
-import org.mapstruct.*;
+
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.Mappings;
+
+
+@Mapper( componentModel = MappingConstants.ComponentModel.SPRING )
 public interface AlumnoMapper {
 
     //Dejo fechaNacimiento porque en AlumnoDTO es un String y en Alumno es un LocalDate
@@ -19,7 +26,7 @@ public interface AlumnoMapper {
     @InheritInverseConfiguration
     Alumno toAlumno(AlumnoDTO alumnoDTO);
 
-    List<AlumnoDTO> toAumnoDTOList (List<Alumno> alumnos);
+    List<AlumnoDTO> toAlumnoDTOList (List<Alumno> alumnos);
 
     List<Alumno> toAlumnoList (List<AlumnoDTO> alumnosDTO);
 
