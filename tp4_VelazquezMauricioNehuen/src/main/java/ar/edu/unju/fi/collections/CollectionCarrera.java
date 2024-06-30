@@ -34,8 +34,10 @@ public class CollectionCarrera {
      *
      * @param carrera Objeto de la clase Carrera
      */
-    public static void agregarCarrera(Carrera carrera) {
+    public static boolean agregarCarrera(Carrera carrera) {
         carreras.add(carrera);
+        
+        return true;
     }
 
     /**

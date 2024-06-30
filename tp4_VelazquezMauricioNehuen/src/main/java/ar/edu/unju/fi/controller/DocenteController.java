@@ -1,9 +1,12 @@
 package ar.edu.unju.fi.controller;
 
-import ar.edu.unju.fi.collections.CollectionAlumno;
-import ar.edu.unju.fi.collections.CollectionDocente;
-import ar.edu.unju.fi.model.Alumno;
+
+
+import ar.edu.unju.fi.dto.DocenteDTO;
+
 import ar.edu.unju.fi.model.Docente;
+import ar.edu.unju.fi.service.IDocenteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/docentes")
 public class DocenteController {
     @Autowired
-    private Docente docente;
+    private DocenteDTO docenteDTO;
+    
+    @Autowired
+    private IDocenteService docenteService;
+    
+    
 
     /**
      * Metodo que permite mostrar la pagina de docentes
@@ -26,7 +34,7 @@ public class DocenteController {
     @GetMapping("/listado")
     public String getDocentesPage(Model model) {
         model.addAttribute("titulo", "Docentes");
-        model.addAttribute("docentes", CollectionDocente.getDocentes());
+        model.addAttribute("docentes", docenteService.findAll());
         return "docentes";
     }
 
@@ -41,7 +49,7 @@ public class DocenteController {
         boolean edicion = false;
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("docente", docente);
+        model.addAttribute("docente", docenteDTO);
         return "docente-form";
     }
 
@@ -54,8 +62,8 @@ public class DocenteController {
     @PostMapping("/guardar-docente")
     public ModelAndView guardarDocente(@ModelAttribute("carrera") Docente docente) {
         ModelAndView modelView = new ModelAndView("docentes");
-        CollectionDocente.agregarDocente(docente);
-        modelView.addObject("docentes", CollectionDocente.getDocentes());
+        docenteService.save(docenteDTO);
+        modelView.addObject("docentes", docenteService.findAll());
         modelView.addObject("titulo", "Alumnos");
         modelView.addObject("isAdded", true);
         return modelView;
@@ -71,8 +79,8 @@ public class DocenteController {
     @GetMapping("/editar-docente/{legajo}")
     public String getEditarDocentePage(Model model, @PathVariable(value = "legajo") String legajo) {
         boolean edicion = true;
-        Docente docenteEncontrado = new Docente();
-        docenteEncontrado = CollectionDocente.buscarDocente(legajo);
+        DocenteDTO docenteEncontrado = new DocenteDTO();
+        docenteEncontrado = docenteService.findById(legajo);
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteEncontrado);
@@ -87,8 +95,8 @@ public class DocenteController {
      * @return la vista docentes.html
      */
     @PostMapping("modificar-docente")
-    public String editarAlumno(@ModelAttribute("docente") Docente docente, RedirectAttributes redirectAttributes) {
-        CollectionDocente.modificarDocente(docente);
+    public String editarAlumno(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
+        docenteService.edit(docenteDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/docentes/listado";
     }
@@ -101,7 +109,7 @@ public class DocenteController {
      */
     @GetMapping("/eliminar-docente/{legajo}")
     public String eliminarAlumno(@PathVariable(value = "legajo") String legajo) {
-        CollectionDocente.eliminarDocente(legajo);
+        docenteService.deleteById(legajo);
         return "redirect:/docentes/listado";
     }
 }
