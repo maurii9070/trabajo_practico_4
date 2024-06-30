@@ -28,9 +28,12 @@ public class CollectionDocente {
     /**
      * Agrega un objeto de la clase Docente al arrayList
      * @param docente Objeto de la clase Docente
+     * @return 
      */
-    public static void agregarDocente(Docente docente) {
+    public static boolean agregarDocente(Docente docente) {
         docentes.add(docente);
+        
+        return true;
     }
 
     /**
