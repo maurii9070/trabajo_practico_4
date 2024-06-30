@@ -35,8 +35,12 @@ public class CollectionAlumno {
      *
      * @param alumno Objeto de la clase Alumno
      */
-    public static void agregarAlumno(Alumno alumno) {
+    public static boolean agregarAlumno(Alumno alumno) {
         alumnos.add(alumno);
+        	return true;
+        
+    	
+        
     }
 
     /**

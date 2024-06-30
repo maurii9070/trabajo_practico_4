@@ -1,16 +1,19 @@
-package ar.edu.unju.fi.model;
+package ar.edu.unju.fi.dto;
 
-import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Component
-@Getter
-@Setter
-@ToString
+import ar.edu.unju.fi.model.Carrera;
+import ar.edu.unju.fi.model.Docente;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Materia {
-    private String nombre;
+@Component
+public class MateriaDTO {
+	private String nombre;
     private String codigo;
     private String curso;
     private Byte cantidadHoras;

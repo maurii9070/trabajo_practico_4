@@ -1,7 +1,10 @@
 package ar.edu.unju.fi.controller;
 
-import ar.edu.unju.fi.collections.CollectionCarrera;
-import ar.edu.unju.fi.model.Carrera;
+
+import ar.edu.unju.fi.dto.CarreraDTO;
+
+import ar.edu.unju.fi.service.ICarreraService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/carreras")
 public class CarreraController {
     @Autowired
-    private Carrera carrera;
+    private CarreraDTO carreraDTO;
+    
+    @Autowired
+    private ICarreraService carreraService;
 
     /**
      * Metodo que permite mostrar la pagina de carreras
@@ -24,7 +30,7 @@ public class CarreraController {
     @GetMapping("/listado")
     public String getCarrerasPage(Model model) {
         model.addAttribute("titulo", "Carreras");
-        model.addAttribute("carreras", CollectionCarrera.getCarreras());
+        model.addAttribute("carreras", carreraService.findAll());
         return "carreras";
     }
 
@@ -39,7 +45,7 @@ public class CarreraController {
         boolean edicion = false;
         model.addAttribute("titulo", "Carreras");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("carrera", carrera);
+        model.addAttribute("carrera", carreraDTO);
         return "carrera-form";
     }
 
@@ -50,11 +56,11 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/guardar-carrera")
-    public ModelAndView guardarCarrera(@ModelAttribute("carrera") Carrera carrera) {
+    public ModelAndView guardarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO) {
         ModelAndView modelView = new ModelAndView("carreras");
-        carrera.setEstado(true);
-        CollectionCarrera.agregarCarrera(carrera);
-        modelView.addObject("carreras", CollectionCarrera.getCarreras());
+        carreraDTO.setEstado(true);
+        carreraService.save(carreraDTO);
+        modelView.addObject("carreras", carreraService.findAll());
         modelView.addObject("isAdded", true);
         return modelView;
     }
@@ -69,8 +75,8 @@ public class CarreraController {
     @GetMapping("/editar-carrera/{codigo}")
     public String getEditarCarreraPage(Model model, @PathVariable(value = "codigo") String codigo) {
         boolean edicion = true;
-        Carrera carreraEncontrada = new Carrera();
-        carreraEncontrada = CollectionCarrera.buscarCarrera(codigo);
+        CarreraDTO carreraEncontrada = new CarreraDTO() ;
+        carreraEncontrada = carreraService.findById(codigo);
         model.addAttribute("titulo", "Carreras");
         model.addAttribute("edicion", edicion);
         model.addAttribute("carrera", carreraEncontrada);
@@ -84,8 +90,8 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/modificar-carrera")
-    public String editarCarrera(@ModelAttribute("carrera") Carrera carrera, RedirectAttributes redirectAttributes) {
-        CollectionCarrera.modificarCarrera(carrera);
+    public String editarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO, RedirectAttributes redirectAttributes) {
+        carreraService.edit(carreraDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/carreras/listado";
     }
@@ -98,7 +104,7 @@ public class CarreraController {
      */
     @GetMapping("/eliminar-carrera/{codigo}")
     public String eliminarCarrera(@PathVariable(value = "codigo") String codigo) {
-        CollectionCarrera.eliminarCarerra(codigo);
+        carreraService.deleteById(codigo);
         return "redirect:/carreras/listado";
     }
 
