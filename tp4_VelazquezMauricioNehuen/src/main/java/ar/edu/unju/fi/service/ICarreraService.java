@@ -10,11 +10,11 @@ public interface ICarreraService {
 	
 	List<CarreraDTO> findAll();
 	
-	CarreraDTO findById(UUID id);
+	CarreraDTO findById(Long id);
 	
 	Carrera save(CarreraDTO carreraDTO);
 	
-	void deleteById(UUID id);
+	void deleteById(Long id);
 	 
 	void edit(CarreraDTO carreraDTO);
 

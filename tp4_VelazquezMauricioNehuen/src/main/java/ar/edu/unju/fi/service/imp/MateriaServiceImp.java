@@ -26,7 +26,7 @@ public class MateriaServiceImp implements IMateriaService {
 	}
 
 	@Override
-	public MateriaDTO findById(UUID id) {
+	public MateriaDTO findById(Long id) {
 		return materiaMapper.toMateriaDTO(materiaRepository.findById(id).get());
 		
 	}
@@ -38,7 +38,7 @@ public class MateriaServiceImp implements IMateriaService {
 	}
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		Materia materia = materiaRepository.findById(id).get();
 		materia.setEstado(false);
 		materiaRepository.save(materia);

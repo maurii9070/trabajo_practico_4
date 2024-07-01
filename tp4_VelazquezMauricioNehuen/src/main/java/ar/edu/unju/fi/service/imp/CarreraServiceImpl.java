@@ -29,8 +29,8 @@ public class CarreraServiceImpl implements ICarreraService {
 	}
 
 	@Override
-	public CarreraDTO findById(UUID id ) {
-		CarreraDTO carreraDTO = carreraMapper.toCarreraDTO(CollectionCarrera.buscarCarrera(id.toString()));
+	public CarreraDTO findById(Long id ) {
+		CarreraDTO carreraDTO = carreraMapper.toCarreraDTO(CollectionCarrera.buscarCarrera(id));
 		
 		return carreraDTO;
 	}
@@ -38,14 +38,13 @@ public class CarreraServiceImpl implements ICarreraService {
 	@Override
 	public Carrera save(CarreraDTO carreraDTO) {
 		CollectionCarrera.agregarCarrera(carreraMapper.toCarrera(carreraDTO));
-		return CollectionCarrera.buscarCarrera(carreraDTO.getIdCarrera().toString());
+		return CollectionCarrera.buscarCarrera(carreraDTO.getIdCarrera());
 	}
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
-		
-		CollectionCarrera.eliminarCarerra(id.toString());
+		CollectionCarrera.eliminarCarerra(id);
 
 	}
 

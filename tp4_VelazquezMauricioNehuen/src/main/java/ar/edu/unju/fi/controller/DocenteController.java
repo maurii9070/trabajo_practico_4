@@ -3,9 +3,6 @@ package ar.edu.unju.fi.controller;
 
 
 import ar.edu.unju.fi.dto.DocenteDTO;
-import ar.edu.unju.fi.mapper.AlumnoMapper;
-import ar.edu.unju.fi.mapper.DocenteMapper;
-import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.service.IDocenteService;
 
 import java.util.UUID;
@@ -28,7 +25,6 @@ public class DocenteController {
     @Qualifier("docenteServiceCollection")
     @Autowired
     private IDocenteService docenteService;
-    
     
 
     /**
@@ -62,13 +58,13 @@ public class DocenteController {
     /**
      * Metodo que permite guardar un nuevo docente
      *
-     * @param docente objeto que representa un docente
+     * @param docenteDTO objeto que representa un docente
      * @return la vista docentes.html
      */
     @PostMapping("/guardar-docente")
     public ModelAndView guardarDocente(@ModelAttribute("carrera") DocenteDTO docenteDTO) {
         ModelAndView modelView = new ModelAndView("docentes");
-        docenteDTO.setIdDocente(UUID.randomUUID());
+        docenteDTO.setIdDocente((long) 40);
         docenteDTO.setEstado(true);
         docenteService.save(docenteDTO);
         modelView.addObject("docentes", docenteService.findAll());
@@ -81,11 +77,11 @@ public class DocenteController {
      * Metodo que permite mostrar la pagina de editar docente
      *
      * @param model  objeto que permite agregar atributos y enviarlos a la vista
-     * @param legajo legajo del docente a editar
+     * @param id legajo del docente a editar
      * @return la vista docente-form.html
      */
     @GetMapping("/editar-docente/{id}")
-    public String getEditarDocentePage(Model model, @PathVariable(value = "id") UUID id) {
+    public String getEditarDocentePage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
         DocenteDTO docenteEncontrado = new DocenteDTO();
         docenteEncontrado = docenteService.findById(id);
@@ -98,7 +94,7 @@ public class DocenteController {
     /**
      * Metodo que permite modificar un docente
      *
-     * @param docente            objeto que representa un docente con los datos modificados
+     * @param docenteDTO            objeto que representa un docente con los datos modificados
      * @param redirectAttributes objeto que permite enviar mensajes a la vista
      * @return la vista docentes.html
      */
@@ -112,11 +108,11 @@ public class DocenteController {
     /**
      * Metodo que permite eliminar un docente
      *
-     * @param legajo legajo del docente a eliminar
+     * @param id legajo del docente a eliminar
      * @return la vista docentes.html
      */
     @GetMapping("/eliminar-docente/{id}")
-    public String eliminarAlumno(@PathVariable(value = "id") UUID id) {
+    public String eliminarAlumno(@PathVariable(value = "id") Long id) {
         docenteService.deleteById(id);
         return "redirect:/docentes/listado";
     }

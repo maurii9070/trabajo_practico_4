@@ -27,21 +27,21 @@ public class DocenteServiceImpl implements IDocenteService {
 	}
 
 	@Override
-	public DocenteDTO findById(UUID id) {
-		DocenteDTO docenteDTO = docenteMapper.toDocenteDTO(CollectionDocente.buscarDocente(id.toString()));
+	public DocenteDTO findById(Long id) {
+		DocenteDTO docenteDTO = docenteMapper.toDocenteDTO(CollectionDocente.buscarDocente(id));
 		return docenteDTO;
 	}
 
 	@Override
 	public Docente save(DocenteDTO docenteDTO) {
 		CollectionDocente.agregarDocente(docenteMapper.toDocente(docenteDTO));
-		return CollectionDocente.buscarDocente(docenteDTO.getIdDocente().toString());
+		return CollectionDocente.buscarDocente(docenteDTO.getIdDocente());
 	}
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		
-		CollectionDocente.eliminarDocente(id.toString());
+		CollectionDocente.eliminarDocente(id);
 
 	}
 

@@ -6,7 +6,6 @@ import ar.edu.unju.fi.mapper.AlumnoMapper;
 import ar.edu.unju.fi.model.Alumno;
 import ar.edu.unju.fi.service.IAlumnoService;
 
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,13 +59,14 @@ public class AlumnoController {
     /**
      * Metodo que permite guardar un nuevo alumno
      *
-     * @param alumno objeto que representa un alumno
+     * @param alumnoDTO objeto que representa un alumno
      * @return la vista alumnos.html
      */
     @PostMapping("/guardar-alumno")
     public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
         ModelAndView modelView = new ModelAndView("alumnos");
-        alumnoDTO.setIdAlumno(UUID.randomUUID());
+        // Set ID
+        alumnoDTO.setIdAlumno((long)20);
         alumnoDTO.setEstado(true);
         Alumno alumnoResultado= alumnoService.save(alumnoDTO);
         
@@ -82,11 +82,11 @@ public class AlumnoController {
      * Metodo que permite mostrar la pagina editar un alumno
      *
      * @param model objeto que permite agregar atributos y enviarlos a la vista
-     * @param dni   atributo que representa el dni del alumno
+     * @param id   atributo que representa el dni del alumno
      * @return la vista alumno-form.html
      */
     @GetMapping("/editar-alumno/{id}")
-    public String getEditarAlumnoPage(Model model, @PathVariable(value = "id") UUID id) {
+    public String getEditarAlumnoPage(Model model, @PathVariable(value = "id") Long id) {
     	System.out.println(id);
         boolean edicion = true;
         AlumnoDTO alumnoEncontrado = new AlumnoDTO();
@@ -102,7 +102,7 @@ public class AlumnoController {
     /**
      * Metodo que permite modificar un alumno
      *
-     * @param alumno             objeto que representa un alumno
+     * @param alumnoDTO             objeto que representa un alumno
      * @param redirectAttributes objeto que permite enviar mensajes a la vista
      * @return la vista alumnos.html
      */
@@ -116,11 +116,11 @@ public class AlumnoController {
     /**
      * Metodo que permite eliminar un alumno
      *
-     * @param dni atributo que representa el dni del alumno
+     * @param id atributo que representa el dni del alumno
      * @return la vista alumnos.html
      */
     @GetMapping("/eliminar-alumno/{id}")
-    public String eliminarAlumno(@PathVariable(value = "id") UUID id) {
+    public String eliminarAlumno(@PathVariable(value = "id") Long id) {
         alumnoService.deleteById(id);
         return "redirect:/alumnos/listado";
     }

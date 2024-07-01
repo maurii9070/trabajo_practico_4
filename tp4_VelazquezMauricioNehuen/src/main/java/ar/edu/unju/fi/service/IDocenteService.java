@@ -10,11 +10,11 @@ public interface IDocenteService {
 	
 	List<DocenteDTO> findAll();
 	
-	DocenteDTO findById(UUID id);
+	DocenteDTO findById(Long id);
 	
 	Docente save(DocenteDTO docenteDTO);
 	
-	void deleteById(UUID id);
+	void deleteById(Long id);
 	
 	void edit(DocenteDTO docenteDTO);
 

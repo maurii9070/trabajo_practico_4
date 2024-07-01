@@ -29,7 +29,7 @@ public class CarreraServiceImp implements ICarreraService {
 	}
 
 	@Override
-	public CarreraDTO findById(UUID id) {
+	public CarreraDTO findById(Long id) {
 		CarreraDTO carreraDTO = carreraMapper.toCarreraDTO(carreraRepository.findById(id).get());
 		return carreraDTO;
 	}
@@ -49,7 +49,7 @@ public class CarreraServiceImp implements ICarreraService {
 
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		Carrera carrera = carreraRepository.findById(id).get();
 		carrera.setEstado(false);
 		carreraRepository.save(carrera);

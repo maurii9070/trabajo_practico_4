@@ -26,20 +26,20 @@ public class MateriaServiceImpl implements IMateriaService {
 	}
 
 	@Override
-	public MateriaDTO findById(UUID id) {
-		MateriaDTO materiaDTO = materiaMapper.toMateriaDTO(CollectionMateria.buscarMateria(id.toString()));
+	public MateriaDTO findById(Long id) {
+		MateriaDTO materiaDTO = materiaMapper.toMateriaDTO(CollectionMateria.buscarMateria(id));
 		return materiaDTO;
 	}
 
 	@Override
 	public Materia save(MateriaDTO materiaDTO) {
 		CollectionMateria.agregarMateria(materiaMapper.toMateria(materiaDTO));
-		return CollectionMateria.buscarMateria(materiaDTO.getCodigo());
+		return CollectionMateria.buscarMateria(materiaDTO.getIdMateria());
 	}
 
 	@Override
-	public void deleteById(UUID id) {
-		CollectionMateria.eliminarMateria(id.toString());
+	public void deleteById(Long id) {
+		CollectionMateria.eliminarMateria(id);
 	}
 
 	@Override

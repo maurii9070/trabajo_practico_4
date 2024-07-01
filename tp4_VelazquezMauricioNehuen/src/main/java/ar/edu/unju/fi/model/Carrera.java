@@ -17,8 +17,9 @@ import java.util.UUID;
 public class Carrera {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idCarrera;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "car_id")
+    private Long idCarrera;
 
     @Column(name = "car_codigo")
     private String codigo;
@@ -29,7 +30,7 @@ public class Carrera {
     @Column(name = "car_duracion")
     private Byte cantidadAnios;
 
-    @Column(name = "car_modalidad")
+    @Column(name = "car_estado")
     private Boolean estado;
 
     @OneToMany(mappedBy = "carrera")

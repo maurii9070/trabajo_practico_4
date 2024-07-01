@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 @Data
 @AllArgsConstructor
@@ -15,8 +13,9 @@ import java.util.UUID;
 public class Docente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idDocente;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "doc_id")
+    private Long idDocente;
 
     @Column(name = "doc_legajo")
     private String legajo;
@@ -37,6 +36,6 @@ public class Docente {
     private boolean estado;
 
     @OneToOne
-    @JoinColumn(name = "mat_uuid")
+    @JoinColumn(name = "mat_id")
     private Materia materia;
 }

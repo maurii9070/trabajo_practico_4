@@ -26,7 +26,7 @@ public class AlumnoServiceImp implements IAlumnoService {
 	}
 
 	@Override
-	public AlumnoDTO findById(UUID id) {
+	public AlumnoDTO findById(Long id) {
 		return alumnoMapper.toAlumnoDTO(alumnoRepository.findById(id).get());
 	}
 
@@ -36,7 +36,7 @@ public class AlumnoServiceImp implements IAlumnoService {
 	}
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		Alumno alumno = alumnoRepository.findById(id).get();
 		alumno.setEstado(false);
 		alumnoRepository.save(alumno);

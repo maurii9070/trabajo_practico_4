@@ -25,20 +25,20 @@ public class AlumnoServiceImpl implements IAlumnoService {
 	}
 
 	@Override
-	public AlumnoDTO findById(UUID id) {
-		AlumnoDTO alumnoDTO = alumnoMapper.toAlumnoDTO(CollectionAlumno.buscarAlumno(id.toString()));
+	public AlumnoDTO findById(Long id) {
+		AlumnoDTO alumnoDTO = alumnoMapper.toAlumnoDTO(CollectionAlumno.buscarAlumno(id));
 		return alumnoDTO;
 	}
 
 	@Override
 	public Alumno save(AlumnoDTO alumnoDTO) {
 		CollectionAlumno.agregarAlumno(alumnoMapper.toAlumno(alumnoDTO));
-		return CollectionAlumno.buscarAlumno(alumnoDTO.getDni());
+		return CollectionAlumno.buscarAlumno(alumnoDTO.getIdAlumno());
 	}
 
 	@Override
-	public void deleteById(UUID id) {
-		CollectionAlumno.eliminarAlumno(id.toString());
+	public void deleteById(Long id) {
+		CollectionAlumno.eliminarAlumno(id);
 		
 	}
 

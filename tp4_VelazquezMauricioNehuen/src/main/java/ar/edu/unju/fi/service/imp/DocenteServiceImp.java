@@ -26,7 +26,7 @@ public class DocenteServiceImp implements IDocenteService {
 	}
 
 	@Override
-	public DocenteDTO findById(UUID id) {
+	public DocenteDTO findById(Long id) {
 		return docenteMapper.toDocenteDTO(docenteRepository.findById(id).get());
 	}
 
@@ -36,7 +36,7 @@ public class DocenteServiceImp implements IDocenteService {
 	}
 
 	@Override
-	public void deleteById(UUID id) {
+	public void deleteById(Long id) {
 		Docente docente = docenteRepository.findById(id).get();
 		docente.setEstado(false);
 		docenteRepository.save(docente);

@@ -57,13 +57,13 @@ public class CarreraController {
     /**
      * Metodo que permite guardar una nueva carrera
      *
-     * @param carrera objeto carrera que se va a guardar
+     * @param carreraDTO objeto carrera que se va a guardar
      * @return retorna la vista carreras
      */
     @PostMapping("/guardar-carrera")
     public ModelAndView guardarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO) {
         ModelAndView modelView = new ModelAndView("carreras");
-        carreraDTO.setIdCarrera(UUID.randomUUID());
+        carreraDTO.setIdCarrera((long) 30);
         carreraDTO.setEstado(true);
         carreraService.save(carreraDTO);
         modelView.addObject("carreras", carreraService.findAll());
@@ -75,11 +75,11 @@ public class CarreraController {
      * Metodo que permite mostrar la pagina de editar carrera
      *
      * @param model  modelo que se le pasa a la vista
-     * @param codigo codigo de la carrera que se va a editar
+     * @param id codigo de la carrera que se va a editar
      * @return retorna la vista carrera-form
      */
     @GetMapping("/editar-carrera/{id}")
-    public String getEditarCarreraPage(Model model, @PathVariable(value = "id") UUID id) {
+    public String getEditarCarreraPage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
         CarreraDTO carreraEncontrada = new CarreraDTO() ;
         carreraEncontrada = carreraService.findById(id);
@@ -92,7 +92,7 @@ public class CarreraController {
     /**
      * Metodo que permite editar una carrera
      *
-     * @param carrera objeto carrera que se va a editar
+     * @param carreraDTO objeto carrera que se va a editar
      * @return retorna la vista carreras
      */
     @PostMapping("/modificar-carrera")
@@ -105,11 +105,11 @@ public class CarreraController {
     /**
      * Metodo que permite eliminar una carrera
      *
-     * @param codigo codigo de la carrera que se va a eliminar
+     * @param  id de la carrera que se va a eliminar
      * @return retorna la vista carreras
      */
     @GetMapping("/eliminar-carrera/{id}")
-    public String eliminarCarrera(@PathVariable(value = "id") UUID id) {
+    public String eliminarCarrera(@PathVariable(value = "id") Long id) {
         carreraService.deleteById(id);
         return "redirect:/carreras/listado";
     }

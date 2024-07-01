@@ -93,13 +93,13 @@ public class MateriaController {
     /**
      * Metodo que permite guardar una nueva materia
      *
-     * @param materia objeto que representa una materia
+     * @param materiaDTO objeto que representa una materia
      * @return la vista materias.html
      */
     @PostMapping("/guardar-materia")
     public ModelAndView guardarMateria(@ModelAttribute("carrera") MateriaDTO materiaDTO) {
         ModelAndView modelView = new ModelAndView("materias");
-        materiaDTO.setIdMateria(UUID.randomUUID());
+        materiaDTO.setIdMateria((long) 50);
         materiaDTO.setEstado(true);
         docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
         carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
@@ -116,11 +116,11 @@ public class MateriaController {
      * Metodo que permite mostrar la pagina de editar materia
      *
      * @param model  objeto que permite agregar atributos y enviarlos a la vista
-     * @param codigo codigo de la materia a editar
+     * @param id codigo de la materia a editar
      * @return la vista materia-form.html
      */
     @GetMapping("/editar-materia/{id}")
-    public String getEditarMateriaPage(Model model, @PathVariable(value = "id") UUID id) {
+    public String getEditarMateriaPage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
         MateriaDTO materiaEncontrada = new MateriaDTO();
         materiaEncontrada = materiaService.findById(id);
@@ -135,7 +135,7 @@ public class MateriaController {
     /**
      * Metodo que permite modificar una materia
      *
-     * @param materia objeto que representa una materia a modificar con sus nuevos datos
+     * @param materiaDTO objeto que representa una materia a modificar con sus nuevos datos
      * @return la vista materias.html
      */
     @PostMapping("modificar-materia")
@@ -153,11 +153,11 @@ public class MateriaController {
     /**
      * Metodo que permite eliminar una materia
      *
-     * @param codigo codigo de la materia a eliminar
+     * @param id codigo de la materia a eliminar
      * @return la vista materias.html
      */
     @GetMapping("/eliminar-materia/{id}")
-    public String eliminarMateria(@PathVariable(value = "id") UUID id) {
+    public String eliminarMateria(@PathVariable(value = "id") Long id) {
         materiaService.deleteById(id);
         return "redirect:/materias/listado";
     }

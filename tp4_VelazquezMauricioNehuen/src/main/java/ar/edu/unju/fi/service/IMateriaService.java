@@ -9,11 +9,11 @@ import ar.edu.unju.fi.model.Materia;
 public interface IMateriaService {
 	List<MateriaDTO> findAll();
 	
-	MateriaDTO findById(UUID id);
+	MateriaDTO findById(Long id);
 	
 	Materia save(MateriaDTO materiaDTO);
 	
-	void deleteById(UUID id);
+	void deleteById(Long id);
 	
 	void edit(MateriaDTO materiaDTO);
 }
