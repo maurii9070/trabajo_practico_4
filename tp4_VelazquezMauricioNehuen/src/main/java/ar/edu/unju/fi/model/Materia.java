@@ -17,8 +17,9 @@ import java.util.UUID;
 public class Materia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idMateria;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mat_id")
+    private Long idMateria;
 
     @Column(name = "mat_nombre")
     private String nombre;
@@ -42,7 +43,7 @@ public class Materia {
     private Docente docente;
 
     @ManyToOne
-    @JoinColumn(name = "car_uuid")
+    @JoinColumn(name = "car_id")
     private Carrera carrera;
 
     @ManyToMany(mappedBy = "materias")

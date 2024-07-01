@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.service.imp;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Service;
 import ar.edu.unju.fi.collections.CollectionAlumno;
 import ar.edu.unju.fi.dto.AlumnoDTO;
 import ar.edu.unju.fi.mapper.AlumnoMapper;
+import ar.edu.unju.fi.model.Alumno;
 import ar.edu.unju.fi.service.IAlumnoService;
 
-@Service
+@Service ("alumnoServiceCollection")
 public class AlumnoServiceImpl implements IAlumnoService {
 
 	@Autowired
@@ -23,20 +25,20 @@ public class AlumnoServiceImpl implements IAlumnoService {
 	}
 
 	@Override
-	public AlumnoDTO findById(String dni) {
-		AlumnoDTO alumnoDTO = alumnoMapper.toAlumnoDTO(CollectionAlumno.buscarAlumno(dni));
+	public AlumnoDTO findById(Long id) {
+		AlumnoDTO alumnoDTO = alumnoMapper.toAlumnoDTO(CollectionAlumno.buscarAlumno(id));
 		return alumnoDTO;
 	}
 
 	@Override
-	public boolean save(AlumnoDTO alumnoDTO) {
-		boolean respuesta = CollectionAlumno.agregarAlumno(alumnoMapper.toAlumno(alumnoDTO));
-		return respuesta;
+	public Alumno save(AlumnoDTO alumnoDTO) {
+		CollectionAlumno.agregarAlumno(alumnoMapper.toAlumno(alumnoDTO));
+		return CollectionAlumno.buscarAlumno(alumnoDTO.getIdAlumno());
 	}
 
 	@Override
-	public void deleteById(String dni) {
-		CollectionAlumno.eliminarAlumno(dni);
+	public void deleteById(Long id) {
+		CollectionAlumno.eliminarAlumno(id);
 		
 	}
 

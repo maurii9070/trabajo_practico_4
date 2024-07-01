@@ -3,10 +3,25 @@ package ar.edu.unju.fi.controller;
 import ar.edu.unju.fi.collections.CollectionCarrera;
 import ar.edu.unju.fi.collections.CollectionDocente;
 import ar.edu.unju.fi.collections.CollectionMateria;
+import ar.edu.unju.fi.dto.CarreraDTO;
+import ar.edu.unju.fi.dto.DocenteDTO;
+import ar.edu.unju.fi.dto.MateriaDTO;
+import ar.edu.unju.fi.mapper.AlumnoMapper;
+import ar.edu.unju.fi.mapper.CarreraMapper;
+import ar.edu.unju.fi.mapper.DocenteMapper;
+import ar.edu.unju.fi.mapper.MateriaMapper;
 import ar.edu.unju.fi.model.Carrera;
 import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.model.Materia;
+import ar.edu.unju.fi.service.IAlumnoService;
+import ar.edu.unju.fi.service.ICarreraService;
+import ar.edu.unju.fi.service.IDocenteService;
+import ar.edu.unju.fi.service.IMateriaService;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +32,34 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/materias")
 public class MateriaController {
     @Autowired
-    private Materia materia;
+    private MateriaDTO materiaDTO;
 
     @Autowired
-    private Docente docente;
+    private DocenteDTO docenteDTO;
 
     @Autowired
-    private Carrera carrera;
+    private CarreraDTO carreraDTO;
+    
+    @Autowired
+    private DocenteMapper docenteMapper;
+    @Autowired
+    private CarreraMapper carreraMapper;
+    
+    @Qualifier("docenteServiceCollection")
+    @Autowired
+    private IDocenteService docenteService;
+    
+    @Qualifier("carreraServiceCollection")
+    @Autowired
+    private ICarreraService carreraService;
+    
+    @Qualifier("materiaServiceCollection")
+    @Autowired
+    private IMateriaService materiaService;
 
+  
+    
+    
     /**
      * Metodo que permite mostrar la pagina de materias
      *
@@ -34,7 +69,7 @@ public class MateriaController {
     @GetMapping("/listado")
     public String getMateriasPage(Model model) {
         model.addAttribute("titulo", "Materias");
-        model.addAttribute("materias", CollectionMateria.getMaterias());
+        model.addAttribute("materias", materiaService.findAll());
         return "materias";
     }
 
@@ -49,30 +84,31 @@ public class MateriaController {
         boolean edicion = false;
         model.addAttribute("titulo", "Nueva Materia");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("materia", materia);
-        model.addAttribute("carreras", CollectionCarrera.getCarreras());
-        model.addAttribute("docentes", CollectionDocente.getDocentes());
+        model.addAttribute("materia", materiaDTO);
+        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("docentes", docenteService.findAll());
         return "materia-form";
     }
 
     /**
      * Metodo que permite guardar una nueva materia
      *
-     * @param materia objeto que representa una materia
+     * @param materiaDTO objeto que representa una materia
      * @return la vista materias.html
      */
     @PostMapping("/guardar-materia")
-    public ModelAndView guardarMateria(@ModelAttribute("carrera") Materia materia) {
+    public ModelAndView guardarMateria(@ModelAttribute("carrera") MateriaDTO materiaDTO) {
         ModelAndView modelView = new ModelAndView("materias");
-        docente = CollectionDocente.buscarDocente(materia.getDocente().getLegajo());
-        carrera = CollectionCarrera.buscarCarrera(materia.getCarrera().getCodigo());
-        materia.setDocente(docente);
-        materia.setCarrera(carrera);
-        if (CollectionMateria.agregarMateria(materia)) {
-            modelView.addObject("materias", CollectionMateria.getMaterias());
+        materiaDTO.setIdMateria((long) 50);
+        materiaDTO.setEstado(true);
+        docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
+        carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
+        materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
+        materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+        materiaService.save(materiaDTO);
+            modelView.addObject("materias", materiaService.findAll());
             modelView.addObject("titulo", "Materias");
             modelView.addObject("isAdded", true);
-        }
         return modelView;
     }
 
@@ -80,49 +116,49 @@ public class MateriaController {
      * Metodo que permite mostrar la pagina de editar materia
      *
      * @param model  objeto que permite agregar atributos y enviarlos a la vista
-     * @param codigo codigo de la materia a editar
+     * @param id codigo de la materia a editar
      * @return la vista materia-form.html
      */
-    @GetMapping("/editar-materia/{codigo}")
-    public String getEditarMateriaPage(Model model, @PathVariable(value = "codigo") String codigo) {
+    @GetMapping("/editar-materia/{id}")
+    public String getEditarMateriaPage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
-        Materia materiaEncontrada = new Materia();
-        materiaEncontrada = CollectionMateria.buscarMateria(codigo);
+        MateriaDTO materiaEncontrada = new MateriaDTO();
+        materiaEncontrada = materiaService.findById(id);
         model.addAttribute("titulo", "Materias");
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaEncontrada);
-        model.addAttribute("carreras", CollectionCarrera.getCarreras());
-        model.addAttribute("docentes", CollectionDocente.getDocentes());
+        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("docentes", docenteService.findAll());
         return "materia-form";
     }
 
     /**
      * Metodo que permite modificar una materia
      *
-     * @param materia objeto que representa una materia a modificar con sus nuevos datos
+     * @param materiaDTO objeto que representa una materia a modificar con sus nuevos datos
      * @return la vista materias.html
      */
     @PostMapping("modificar-materia")
-    public String modificarMateria(@ModelAttribute("materia") Materia materia, RedirectAttributes redirectAttributes) {
-        docente = CollectionDocente.buscarDocente(materia.getDocente().getLegajo());
-        carrera = CollectionCarrera.buscarCarrera(materia.getCarrera().getCodigo());
-        materia.setDocente(docente);
-        materia.setCarrera(carrera);
-        CollectionMateria.modificarMateria(materia);
+    public String modificarMateria(@ModelAttribute("materia") MateriaDTO materiaDTO, RedirectAttributes redirectAttributes) {
+    	docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
+        carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
+        materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
+        materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+        materiaService.edit(materiaDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
-        System.out.println(materia);
+        System.out.println(materiaDTO);
         return "redirect:/materias/listado";
     }
 
     /**
      * Metodo que permite eliminar una materia
      *
-     * @param codigo codigo de la materia a eliminar
+     * @param id codigo de la materia a eliminar
      * @return la vista materias.html
      */
-    @GetMapping("/eliminar-materia/{codigo}")
-    public String eliminarMateria(@PathVariable(value = "codigo") String codigo) {
-        CollectionMateria.eliminarMateria(codigo);
+    @GetMapping("/eliminar-materia/{id}")
+    public String eliminarMateria(@PathVariable(value = "id") Long id) {
+        materiaService.deleteById(id);
         return "redirect:/materias/listado";
     }
 

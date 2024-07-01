@@ -5,16 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 @Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlumnoDTO {
 
-	private UUID idAlumno;
+	private Long idAlumno;
     private String dni;
     private String nombre;
     private String apellido;

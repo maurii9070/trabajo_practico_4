@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 @Data
@@ -18,8 +17,9 @@ import java.util.UUID;
 public class Alumno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idAlumno;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "alu_id")
+    private Long idAlumno;
 
     @Column(name = "alu_dni")
     private String dni;
@@ -39,7 +39,7 @@ public class Alumno {
     @Column(name = "alu_fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @Column(name = "alu_edad")
+    @Column(name = "alu_domicilio")
     private String domicilio;
 
     @Column(name = "alu_lu")
@@ -51,12 +51,12 @@ public class Alumno {
     @ManyToMany
     @JoinTable(
             name = "alumnos_materias",
-            joinColumns = @JoinColumn(name = "alu_lu"),
-            inverseJoinColumns = @JoinColumn(name = "mat_codigo")
+            joinColumns = @JoinColumn(name = "alu_id"),
+            inverseJoinColumns = @JoinColumn(name = "mat_id")
     )
     List<Materia> materias = new ArrayList<Materia>();
 
     @ManyToOne
-    @JoinColumn(name = "car_uuid")
+    @JoinColumn(name = "car_id")
     private Carrera carrera;
 }

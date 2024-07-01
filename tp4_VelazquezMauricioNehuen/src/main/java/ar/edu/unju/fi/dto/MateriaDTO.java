@@ -1,7 +1,5 @@
 package ar.edu.unju.fi.dto;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import ar.edu.unju.fi.model.Carrera;
@@ -16,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Component
 public class MateriaDTO {
 	
-	private UUID idMateria;
+	private Long idMateria;
 	private String nombre;
     private String codigo;
     private String curso;

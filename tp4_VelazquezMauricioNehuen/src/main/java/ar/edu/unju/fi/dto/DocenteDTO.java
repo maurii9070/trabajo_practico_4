@@ -1,6 +1,5 @@
 package ar.edu.unju.fi.dto;
 
-import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Component
 public class DocenteDTO {
 	
-	private UUID idDocente;
+	private Long idDocente;
 	private String legajo;
     private String nombre;
     private String apellido;
