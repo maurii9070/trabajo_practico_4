@@ -43,6 +43,7 @@ public class MateriaController {
     @Autowired
     private IDocenteService docenteService;
     
+    @Qualifier("carreraServiceCollection")
     @Autowired
     private ICarreraService carreraService;
     

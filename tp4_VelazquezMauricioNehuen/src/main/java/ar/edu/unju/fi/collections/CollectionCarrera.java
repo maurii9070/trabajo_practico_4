@@ -46,10 +46,10 @@ public class CollectionCarrera {
      *
      * @param codigoCarrera Objeto de la clase Carrera con atributos modificados
      */
-    public static void eliminarCarerra(String codigoCarrera) {
+    public static void eliminarCarerra(String id) {
         Iterator<Carrera> iterator = carreras.iterator();
         while (iterator.hasNext()) {
-            if (iterator.next().getCodigo().equals(codigoCarrera)) {
+            if (iterator.next().getIdCarrera().toString().equals(id)) {
                 iterator.remove();
             }
         }
@@ -78,8 +78,8 @@ public class CollectionCarrera {
      * @param codigoCarrera Objeto de la clase Carrera con atributos modificados
      * @return Objeto de la clase Carrera
      */
-    public static Carrera buscarCarrera(String codigoCarrera) {
-        Predicate<Carrera> filterCodigo = c -> c.getCodigo().equals(codigoCarrera);
+    public static Carrera buscarCarrera(String id) {
+        Predicate<Carrera> filterCodigo = c -> c.getIdCarrera().toString().equals(id);
         Optional<Carrera> carrera = carreras.stream().filter(filterCodigo).findFirst();
         if (carrera.isPresent()) {
             return carrera.get();

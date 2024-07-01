@@ -46,13 +46,14 @@
                         </td>
                         <td>
                             <a
-                                th:href="@{/carreras/editar-carrera/{codigo} (codigo=${carrera.codigo})}"
+                                th:href="@{/carreras/editar-carrera/{id} (id=${carrera.idCarrera})}"
                                 class="btn btn-warning"
                             >Editar</a>
                             <a
                                 th:data-codigo="${carrera.codigo}"
+                                th:data-id="${carrera.idCarrera}"
                                 class="btn btn-danger"
-                                onclick="confirmDelete(this.getAttribute('data-codigo'))"
+                                onclick="confirmDelete(this.getAttribute('data-codigo'),this.getAttribute('data-id'))"
                             >Eliminar</a>
                         </td>
                     </tr>
@@ -67,9 +68,9 @@
              * Confirmar eliminación de una carrera
              * @param codigo
              */
-            function confirmDelete(codigo) {
+            function confirmDelete(codigo,id) {
                 if (confirm('¿Está seguro que desea eliminar la carrera de codigo: ' + codigo + '?')) {
-                    window.location.href = '/carreras/eliminar-carrera/' + codigo;
+                    window.location.href = '/carreras/eliminar-carrera/' + id;
                 }
             }
 
