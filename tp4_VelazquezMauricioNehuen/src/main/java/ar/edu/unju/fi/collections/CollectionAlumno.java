@@ -78,8 +78,8 @@ public class CollectionAlumno {
      * @param dni Objeto de la clase Alumno
      * @return Objeto de la clase Alumno
      */
-    public static Alumno buscarAlumno(String dni) {
-        Predicate<Alumno> filterCodigo = alumno -> alumno.getDni().equals(dni);
+    public static Alumno buscarAlumno(String id) {
+        Predicate<Alumno> filterCodigo = alumno -> alumno.getIdAlumno().toString().equals(id);
         Optional<Alumno> alumno = alumnos.stream().filter(filterCodigo).findFirst();
         return alumno.orElse(null);
     }

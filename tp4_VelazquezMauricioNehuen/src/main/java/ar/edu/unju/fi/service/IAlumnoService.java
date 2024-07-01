@@ -1,19 +1,21 @@
 package ar.edu.unju.fi.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import ar.edu.unju.fi.dto.AlumnoDTO;
+import ar.edu.unju.fi.model.Alumno;
 
 public interface IAlumnoService {
 
 	List<AlumnoDTO> findAll();
 	
-	AlumnoDTO findById(String dni);
+	AlumnoDTO findById(UUID id);
 	
 	// Posible cambio a boolean
-	boolean save(AlumnoDTO alumnoDTO);
+	Alumno save(AlumnoDTO alumnoDTO);
 	
-	void deleteById(String dni);
+	void deleteById(UUID id);
 	
 	void edit(AlumnoDTO alumnoDTO);
 }

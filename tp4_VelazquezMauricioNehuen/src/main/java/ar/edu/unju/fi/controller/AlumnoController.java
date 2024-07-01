@@ -2,10 +2,14 @@ package ar.edu.unju.fi.controller;
 
 import ar.edu.unju.fi.collections.CollectionAlumno;
 import ar.edu.unju.fi.dto.AlumnoDTO;
+import ar.edu.unju.fi.mapper.AlumnoMapper;
 import ar.edu.unju.fi.model.Alumno;
 import ar.edu.unju.fi.service.IAlumnoService;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AlumnoController {
     @Autowired
     private AlumnoDTO alumnoDTO;
-
+    
+    @Autowired
+    private AlumnoMapper alumnoMapper;
+    
+    @Qualifier("alumnoServiceCollection")
     @Autowired
     private IAlumnoService alumnoService;
     
@@ -58,12 +66,15 @@ public class AlumnoController {
     @PostMapping("/guardar-alumno")
     public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
         ModelAndView modelView = new ModelAndView("alumnos");
-        if (alumnoService.save(alumnoDTO)) {
-        	modelView.addObject("alumnos", alumnoService.findAll());
-            modelView.addObject("titulo", "Alumnos");
-            modelView.addObject("isAdded", true);
-        }
+        alumnoDTO.setIdAlumno(UUID.randomUUID());
+        alumnoDTO.setEstado(true);
+        Alumno alumnoResultado= alumnoService.save(alumnoDTO);
         
+        modelView.addObject("alumnos", alumnoService.findAll());
+        modelView.addObject("titulo", "Alumnos");
+        modelView.addObject("isAdded", true);
+        
+        System.out.println(alumnoService.findAll());
         return modelView;
     }
 
@@ -74,14 +85,16 @@ public class AlumnoController {
      * @param dni   atributo que representa el dni del alumno
      * @return la vista alumno-form.html
      */
-    @GetMapping("/editar-alumno/{dni}")
-    public String getEditarAlumnoPage(Model model, @PathVariable(value = "dni") String dni) {
+    @GetMapping("/editar-alumno/{id}")
+    public String getEditarAlumnoPage(Model model, @PathVariable(value = "id") UUID id) {
+    	System.out.println(id);
         boolean edicion = true;
         AlumnoDTO alumnoEncontrado = new AlumnoDTO();
-        alumnoEncontrado = alumnoService.findById(dni);
+        alumnoEncontrado = alumnoService.findById(id);
+        
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("alumno", alumnoEncontrado);
+        model.addAttribute("alumno", alumnoMapper.toAlumno(alumnoEncontrado) );
         System.out.println(alumnoEncontrado);
         return "alumno-form";
     }
@@ -106,9 +119,9 @@ public class AlumnoController {
      * @param dni atributo que representa el dni del alumno
      * @return la vista alumnos.html
      */
-    @GetMapping("/eliminar-alumno/{dni}")
-    public String eliminarAlumno(@PathVariable(value = "dni") String dni) {
-        alumnoService.deleteById(dni);
+    @GetMapping("/eliminar-alumno/{id}")
+    public String eliminarAlumno(@PathVariable(value = "id") UUID id) {
+        alumnoService.deleteById(id);
         return "redirect:/alumnos/listado";
     }
 }

@@ -41,12 +41,13 @@
                         <td>
                             <a
                                 class="btn btn-warning"
-                                th:href="@{/alumnos/editar-alumno/{dni}(dni=${alumno.dni})}"
+                                th:href="@{/alumnos/editar-alumno/{id}(id=${alumno.idAlumno})}"
                             >Editar</a>
                             <a
                                 class="btn btn-danger"
-                                th:data-id="${alumno.dni}"
-                                onclick="confirmDelete(this.getAttribute('data-id'))"
+                                th:data-id="${alumno.idAlumno}"
+                                th:data-dni="${alumno.dni}"
+                                onclick="confirmDelete(this.getAttribute('data-id'),this.getAttribute('data-dni'))"
                             >Eliminar</a>
                         </td>
                     </tr>
@@ -62,9 +63,9 @@
              * Confirmar eliminación de un alumno
              * @param dni
              */
-            function confirmDelete(dni) {
+            function confirmDelete(id,dni) {
                 if (confirm('¿Está seguro que desea eliminar el alumno con DNI ' + dni + '?')) {
-                    window.location.href = '/alumnos/eliminar-alumno/' + dni;
+                    window.location.href = '/alumnos/eliminar-alumno/' + id;
                 }
             }
 
