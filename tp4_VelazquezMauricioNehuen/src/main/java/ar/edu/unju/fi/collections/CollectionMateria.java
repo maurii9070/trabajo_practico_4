@@ -70,7 +70,7 @@ public class CollectionMateria {
      * @return Objeto de la clase Materia
      */
     public static Materia buscarMateria(String codigoMateria) {
-        Predicate<Materia> filterCodigo = m -> m.getCodigo().equals(codigoMateria);
+        Predicate<Materia> filterCodigo = m -> m.getIdMateria().toString().equals(codigoMateria);
         Optional<Materia> materia = materias.stream().filter(filterCodigo).findFirst();
         return materia.orElse(null);
     }

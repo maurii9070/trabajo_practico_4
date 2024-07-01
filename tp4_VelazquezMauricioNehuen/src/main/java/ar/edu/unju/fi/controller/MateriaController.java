@@ -3,10 +3,21 @@ package ar.edu.unju.fi.controller;
 import ar.edu.unju.fi.collections.CollectionCarrera;
 import ar.edu.unju.fi.collections.CollectionDocente;
 import ar.edu.unju.fi.collections.CollectionMateria;
+import ar.edu.unju.fi.dto.CarreraDTO;
+import ar.edu.unju.fi.dto.DocenteDTO;
+import ar.edu.unju.fi.dto.MateriaDTO;
+import ar.edu.unju.fi.mapper.AlumnoMapper;
+import ar.edu.unju.fi.mapper.MateriaMapper;
 import ar.edu.unju.fi.model.Carrera;
 import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.model.Materia;
+import ar.edu.unju.fi.service.IAlumnoService;
+import ar.edu.unju.fi.service.ICarreraService;
+import ar.edu.unju.fi.service.IDocenteService;
+import ar.edu.unju.fi.service.IMateriaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +28,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/materias")
 public class MateriaController {
     @Autowired
-    private Materia materia;
+    private MateriaDTO materiaDTO;
 
     @Autowired
-    private Docente docente;
+    private DocenteDTO docenteDTO;
 
     @Autowired
-    private Carrera carrera;
+    private CarreraDTO carreraDTO;
+    
+    @Autowired
+    private MateriaMapper materiaMapper;
+    
+    @Qualifier("materiaServiceCollection")
+    @Autowired
+    private IMateriaService materiaService;
 
+    @Autowired
+    private IDocenteService docenteService;
+    
+    @Autowired
+    private ICarreraService carreraService;
+    
+    
     /**
      * Metodo que permite mostrar la pagina de materias
      *
@@ -34,7 +59,7 @@ public class MateriaController {
     @GetMapping("/listado")
     public String getMateriasPage(Model model) {
         model.addAttribute("titulo", "Materias");
-        model.addAttribute("materias", CollectionMateria.getMaterias());
+        model.addAttribute("materias", materiaService.findAll());
         return "materias";
     }
 
@@ -49,9 +74,9 @@ public class MateriaController {
         boolean edicion = false;
         model.addAttribute("titulo", "Nueva Materia");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("materia", materia);
-        model.addAttribute("carreras", CollectionCarrera.getCarreras());
-        model.addAttribute("docentes", CollectionDocente.getDocentes());
+        model.addAttribute("materia", materiaDTO);
+        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("docentes", docenteService.findAll());
         return "materia-form";
     }
 
@@ -64,10 +89,11 @@ public class MateriaController {
     @PostMapping("/guardar-materia")
     public ModelAndView guardarMateria(@ModelAttribute("carrera") Materia materia) {
         ModelAndView modelView = new ModelAndView("materias");
-        docente = CollectionDocente.buscarDocente(materia.getDocente().getLegajo());
-        carrera = CollectionCarrera.buscarCarrera(materia.getCarrera().getCodigo());
-        materia.setDocente(docente);
-        materia.setCarrera(carrera);
+        docenteDTO = null;
+        carreraDTO = null;
+        //MODIFICAR DOCENTE Y CARRERA
+//        materia.setDocente(docenteDTO);  
+//        materia.setCarrera(carreraDTO);
         if (CollectionMateria.agregarMateria(materia)) {
             modelView.addObject("materias", CollectionMateria.getMaterias());
             modelView.addObject("titulo", "Materias");
@@ -104,10 +130,11 @@ public class MateriaController {
      */
     @PostMapping("modificar-materia")
     public String modificarMateria(@ModelAttribute("materia") Materia materia, RedirectAttributes redirectAttributes) {
-        docente = CollectionDocente.buscarDocente(materia.getDocente().getLegajo());
-        carrera = CollectionCarrera.buscarCarrera(materia.getCarrera().getCodigo());
-        materia.setDocente(docente);
-        materia.setCarrera(carrera);
+        docenteDTO = null;
+        carreraDTO = null;
+        //MODIFICAR DOCENTE Y CARRERA
+//        materia.setDocente(docente);
+//        materia.setCarrera(carrera);
         CollectionMateria.modificarMateria(materia);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         System.out.println(materia);
