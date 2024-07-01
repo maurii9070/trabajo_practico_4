@@ -3,11 +3,15 @@ package ar.edu.unju.fi.controller;
 
 
 import ar.edu.unju.fi.dto.DocenteDTO;
-
+import ar.edu.unju.fi.mapper.AlumnoMapper;
+import ar.edu.unju.fi.mapper.DocenteMapper;
 import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.service.IDocenteService;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,8 @@ public class DocenteController {
     @Autowired
     private DocenteDTO docenteDTO;
     
+    
+    @Qualifier("docenteServiceCollection")
     @Autowired
     private IDocenteService docenteService;
     
@@ -60,11 +66,13 @@ public class DocenteController {
      * @return la vista docentes.html
      */
     @PostMapping("/guardar-docente")
-    public ModelAndView guardarDocente(@ModelAttribute("carrera") Docente docente) {
+    public ModelAndView guardarDocente(@ModelAttribute("carrera") DocenteDTO docenteDTO) {
         ModelAndView modelView = new ModelAndView("docentes");
+        docenteDTO.setIdDocente(UUID.randomUUID());
+        docenteDTO.setEstado(true);
         docenteService.save(docenteDTO);
         modelView.addObject("docentes", docenteService.findAll());
-        modelView.addObject("titulo", "Alumnos");
+        modelView.addObject("titulo", "Docentes");
         modelView.addObject("isAdded", true);
         return modelView;
     }
@@ -76,11 +84,11 @@ public class DocenteController {
      * @param legajo legajo del docente a editar
      * @return la vista docente-form.html
      */
-    @GetMapping("/editar-docente/{legajo}")
-    public String getEditarDocentePage(Model model, @PathVariable(value = "legajo") String legajo) {
+    @GetMapping("/editar-docente/{id}")
+    public String getEditarDocentePage(Model model, @PathVariable(value = "id") UUID id) {
         boolean edicion = true;
         DocenteDTO docenteEncontrado = new DocenteDTO();
-        docenteEncontrado = docenteService.findById(legajo);
+        docenteEncontrado = docenteService.findById(id);
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteEncontrado);
@@ -107,9 +115,9 @@ public class DocenteController {
      * @param legajo legajo del docente a eliminar
      * @return la vista docentes.html
      */
-    @GetMapping("/eliminar-docente/{legajo}")
-    public String eliminarAlumno(@PathVariable(value = "legajo") String legajo) {
-        docenteService.deleteById(legajo);
+    @GetMapping("/eliminar-docente/{id}")
+    public String eliminarAlumno(@PathVariable(value = "id") UUID id) {
+        docenteService.deleteById(id);
         return "redirect:/docentes/listado";
     }
 }

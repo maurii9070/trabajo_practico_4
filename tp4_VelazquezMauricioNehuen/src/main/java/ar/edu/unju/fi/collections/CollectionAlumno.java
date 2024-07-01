@@ -49,8 +49,8 @@ public class CollectionAlumno {
      *
      * @param dni Objeto de la clase Alumno con atributos modificados
      */
-    public static void eliminarAlumno(String dni) {
-        alumnos.removeIf(alumno -> alumno.getDni().equals(dni));
+    public static void eliminarAlumno(String id) {
+        alumnos.removeIf(alumno -> alumno.getIdAlumno().toString().equals(id));
     }
 
     /**

@@ -39,15 +39,18 @@ public class MateriaController {
     @Autowired
     private MateriaMapper materiaMapper;
     
-    @Qualifier("materiaServiceCollection")
-    @Autowired
-    private IMateriaService materiaService;
-
+    @Qualifier("docenteServiceCollection")
     @Autowired
     private IDocenteService docenteService;
     
     @Autowired
     private ICarreraService carreraService;
+    
+    @Qualifier("materiaServiceCollection")
+    @Autowired
+    private IMateriaService materiaService;
+
+  
     
     
     /**
