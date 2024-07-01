@@ -36,10 +36,10 @@ public class CollectionMateria {
      *
      * @param codigoMateria Objeto de la clase Materia con atributos modificados
      */
-    public static void eliminarMateria(String codigoMateria) {
+    public static void eliminarMateria(String id) {
         Iterator<Materia> iterator = materias.iterator();
         while (iterator.hasNext()) {
-            if (iterator.next().getCodigo().equals(codigoMateria)) {
+            if (iterator.next().getIdMateria().toString().equals(id)) {
                 iterator.remove();
             }
         }
