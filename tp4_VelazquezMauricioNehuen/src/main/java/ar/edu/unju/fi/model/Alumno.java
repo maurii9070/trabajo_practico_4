@@ -42,7 +42,7 @@ public class Alumno {
     @Column(name = "alu_edad")
     private String domicilio;
 
-    @Column(name = "alu_fecha_ingreso")
+    @Column(name = "alu_lu")
     private String lu;
 
     @Column(name = "alu_estado")

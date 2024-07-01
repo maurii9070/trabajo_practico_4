@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CollectionAlumno {
@@ -20,12 +21,12 @@ public class CollectionAlumno {
      */
     public static List<Alumno> getAlumnos() {
         if (alumnos.isEmpty()) {
-            alumnos.add(new Alumno("40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
-                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853"));
-            alumnos.add(new Alumno("40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
-                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "APU8363"));
-            alumnos.add(new Alumno("40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
-                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "APU1234"));
+            alumnos.add(new Alumno(UUID.randomUUID(),"40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
+                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null, null));
+            alumnos.add(new Alumno(UUID.randomUUID(),"40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
+                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "APU8363",true, null, null));
+            alumnos.add(new Alumno(UUID.randomUUID(),"40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
+                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "APU1234",true, null, null));
         }
         return alumnos;
     }

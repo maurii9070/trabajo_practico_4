@@ -5,6 +5,7 @@ import ar.edu.unju.fi.model.Docente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CollectionDocente {
@@ -16,11 +17,11 @@ public class CollectionDocente {
      */
     public static List<Docente> getDocentes() {
         if (docentes.isEmpty()) {
-            docentes.add(new Docente("D001", "Juan", "Perez", "juan@correo.com", "3884552367"));
-            docentes.add(new Docente("D002", "Maria", "Gomez", "maria@correo.com", "3886530123"));
-            docentes.add(new Docente("D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745"));
-            docentes.add(new Docente("D004", "Ana", "Martinez", "ana@correo.com", "3884569870"));
-            docentes.add(new Docente("D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472"));
+            docentes.add(new Docente(UUID.randomUUID(), "D001", "Marcelo", "Ibarra", "ibarra@correo.com", "3884789456", false, null));
+            docentes.add(new Docente(UUID.randomUUID(),"D002", "Maria", "Gomez", "maria@correo.com", "3886530123",true,null));
+            docentes.add(new Docente(UUID.randomUUID(),"D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745",true,null));
+            docentes.add(new Docente(UUID.randomUUID(),"D004", "Ana", "Martinez", "ana@correo.com", "3884569870",true,null));
+            docentes.add(new Docente(UUID.randomUUID(),"D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472",true,null));
         }
         return docentes;
     }
