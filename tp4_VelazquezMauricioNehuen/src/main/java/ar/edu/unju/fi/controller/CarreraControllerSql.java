@@ -43,7 +43,7 @@ public class CarreraControllerSql {
 	        model.addAttribute("titulo", "Carreras");
 	        model.addAttribute("edicion", edicion);
 	        model.addAttribute("carrera", carreraDTO);
-	        return "carrera-form";
+	        return "carrera-formsql";
 	    }
 	 
 	 
@@ -67,7 +67,7 @@ public class CarreraControllerSql {
 	        model.addAttribute("titulo", "Carreras");
 	        model.addAttribute("edicion", edicion);
 	        model.addAttribute("carrera", carreraEncontrada);
-	        return "carrera-form";
+	        return "carrera-formsql";
 	    }
 	 
 	 
