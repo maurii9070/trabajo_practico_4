@@ -32,8 +32,8 @@ class InsertAlumno {
 
 		List<Materia> materias = new ArrayList<>();
 
-		Materia materiaEcontrada = materiaRepository.findById(1L).get();
-		materias.add(materiaEcontrada);
+		//Materia materiaEcontrada = materiaRepository.findById(1L).get();
+		//materias.add(materiaEcontrada);
 
 		alumno.setMaterias(materias);
 
