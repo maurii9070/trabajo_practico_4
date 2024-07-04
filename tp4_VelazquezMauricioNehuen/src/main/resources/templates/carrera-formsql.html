@@ -7,7 +7,7 @@
     <section class="container">
         <h2 class="text-center my-5" th:text="${edicion ? 'Modificar Carrera' : 'Nueva Carrera'}"></h2>
         <div class="mx-auto" style="max-width: 576px">
-            <form th:action="${edicion} ? '/carrerasSql/modificar-carrera' : '/carrerasSql/guardar-carrera'"
+            <form th:action="${edicion} ? '/carreras-sql/modificar-carrera' : '/carreras-sql/guardar-carrera'"
                   th:object="${carrera}"
                   method="post">
                 <div class="mb-3">

@@ -9,7 +9,7 @@
             <h2 class="text-center my-5">Listado de Carreras</h2>
 
             <div class="d-flex justify-content-end mb-2">
-                <a th:href="@{/carrerasSql/nueva-carrera}" class="btn btn-primary">Nueva Carrera</a>
+                <a th:href="@{/carreras-sql/nueva-carrera}" class="btn btn-primary">Nueva Carrera</a>
             </div>
 
             <div th:if="${isAdded}" id="alert" class="alert alert-success" role="alert">
@@ -46,7 +46,7 @@
                         </td>
                         <td>
                             <a
-                                th:href="@{/carrerasSql/editar-carrera/{id} (id=${carrera.idCarrera})}"
+                                th:href="@{/carreras-sql/editar-carrera/{id} (id=${carrera.idCarrera})}"
                                 class="btn btn-warning"
                             >Editar</a>
                             <a
@@ -71,7 +71,7 @@
              */
             function confirmDelete(codigo, id) {
                 if (confirm('¿Está seguro que desea eliminar la carrera de codigo: ' + codigo + '?')) {
-                    window.location.href = '/carrerasSql/eliminar-carrera/' + id;
+                    window.location.href = '/carreras-sql/eliminar-carrera/' + id;
                 }
             }
 
