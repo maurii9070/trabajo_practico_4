@@ -10,6 +10,14 @@
             <form th:action="${edicion} ? '/carreras-sql/modificar-carrera' : '/carreras-sql/guardar-carrera'"
                   th:object="${carrera}"
                   method="post">
+                
+                <div th:if="${edicion}">
+                    <input type="hidden"
+                           name="idCarrera"
+                           th:field="*{idCarrera}" />
+                </div>
+                
+                
                 <div class="mb-3">
                     <label for="codigo" class="form-label">Código</label>
                     <input type="text"

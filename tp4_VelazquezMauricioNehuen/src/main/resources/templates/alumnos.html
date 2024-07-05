@@ -28,6 +28,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Email</th>
                         <th scope="col">Fecha Nacimiento</th>
+                        <th scope="col">Carrera</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                         <td th:text="${alumno.apellido}"></td>
                         <td th:text="${alumno.email}"></td>
                         <td th:text="${alumno.fechaNacimiento}"></td>
+                        <td th:text="${alumno.carrera != null ? alumno.carrera.nombre : 'Sin carrera asignada'}"></td>
                         <td>
                             <a
                                 class="btn btn-warning"

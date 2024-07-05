@@ -16,6 +16,14 @@
                     th:object="${materia}"
                     method="post"
                 >
+                    
+                    <div th:if="${edicion}">
+                    <input type="hidden"
+                           name="idMateria"
+                           th:field="*{idMateria}" />
+                </div>
+                    
+                    
                     <div class="mb-3">
                         <label for="codigo" class="form-label">Codigo</label>
                         <input

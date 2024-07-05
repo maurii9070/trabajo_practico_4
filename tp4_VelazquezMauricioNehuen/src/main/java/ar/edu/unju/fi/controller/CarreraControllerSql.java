@@ -28,7 +28,7 @@ public class CarreraControllerSql {
 	@Qualifier("carreraServiceMySql")
 	@Autowired
 	private CarreraServiceImp carreraServiceImp;
-	
+			
 	 @GetMapping("/listado")
 	    public String getCarrerasPage(Model model) {
 	        model.addAttribute("titulo", "Carreras");
@@ -73,7 +73,8 @@ public class CarreraControllerSql {
 	 
 	 @PostMapping("/modificar-carrera")
 	    public String editarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO, RedirectAttributes redirectAttributes) {
-	        carreraServiceImp.edit(carreraDTO);
+		 System.out.println("ID de la carrera: " + carreraDTO.getIdCarrera());
+		 carreraServiceImp.edit(carreraDTO);
 	        redirectAttributes.addFlashAttribute("isUpdated", true);
 	        return "redirect:/carreras-sql/listado";
 	    }

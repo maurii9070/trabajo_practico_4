@@ -17,11 +17,11 @@ public class CollectionDocente {
      */
     public static List<Docente> getDocentes() {
         if (docentes.isEmpty()) {
-            docentes.add(new Docente((long) 1, "D001", "Marcelo", "Ibarra", "ibarra@correo.com", "3884789456", true, null));
-            docentes.add(new Docente((long) 2,"D002", "Maria", "Gomez", "maria@correo.com", "3886530123",true,null));
-            docentes.add(new Docente((long) 3,"D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745",true,null));
-            docentes.add(new Docente((long) 4,"D004", "Ana", "Martinez", "ana@correo.com", "3884569870",true,null));
-            docentes.add(new Docente((long) 5,"D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472",true,null));
+            docentes.add(new Docente((long) 1, "D001", "Marcelo", "Ibarra", "ibarra@correo.com", "3884789456", true, null, null));
+            docentes.add(new Docente((long) 2,"D002", "Maria", "Gomez", "maria@correo.com", "3886530123",true,null, null));
+            docentes.add(new Docente((long) 3,"D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745",true,null, null));
+            docentes.add(new Docente((long) 4,"D004", "Ana", "Martinez", "ana@correo.com", "3884569870",true,null, null));
+            docentes.add(new Docente((long) 5,"D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472",true,null, null));
         }
         return docentes;
     }
