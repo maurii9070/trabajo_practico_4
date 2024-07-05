@@ -28,6 +28,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefono</th>
+                        <th scope="col">Materia</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@
                         <td th:text="${docente.apellido}"></td>
                         <td th:text="${docente.email}"></td>
                         <td th:text="${docente.telefono}"></td>
+                        <td th:text="${docente.materia != null ? docente.materia.nombre : 'Sin materia asignada'}"></td>
                         <td>
                             <a
                                 class="btn btn-warning"

@@ -2,10 +2,13 @@ package ar.edu.unju.fi.controller;
 
 import ar.edu.unju.fi.collections.CollectionAlumno;
 import ar.edu.unju.fi.dto.AlumnoDTO;
+import ar.edu.unju.fi.dto.CarreraDTO;
 import ar.edu.unju.fi.mapper.AlumnoMapper;
+import ar.edu.unju.fi.mapper.CarreraMapper;
 import ar.edu.unju.fi.model.Alumno;
+import ar.edu.unju.fi.model.Carrera;
 import ar.edu.unju.fi.service.IAlumnoService;
-
+import ar.edu.unju.fi.service.ICarreraService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,9 +27,16 @@ public class AlumnoController {
     @Autowired
     private AlumnoMapper alumnoMapper;
     
-    @Qualifier("alumnoServiceCollection")
+    @Qualifier("alumnoServiceMySql")
     @Autowired
     private IAlumnoService alumnoService;
+    
+    @Qualifier("carreraServiceMySql")
+    @Autowired
+    private ICarreraService carreraService; // inyecto carreraService para poder utilizarlo
+    
+    @Autowired
+    private CarreraMapper carreraMapper; // Inyecta el mapper de Carrera
     
     /**
      * Metodo que permite mostrar la pagina de alumnos
@@ -52,7 +62,12 @@ public class AlumnoController {
         boolean edicion = false;
         model.addAttribute("titulo", "Nuevo Alumno");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("alumno", alumnoDTO);
+        
+        //model.addAttribute("alumno", alumnoDTO);
+        model.addAttribute("alumno", new AlumnoDTO());
+        
+        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        
         return "alumno-form";
     }
 
@@ -62,7 +77,7 @@ public class AlumnoController {
      * @param alumnoDTO objeto que representa un alumno
      * @return la vista alumnos.html
      */
-    @PostMapping("/guardar-alumno")
+   /* @PostMapping("/guardar-alumno")
     public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
         ModelAndView modelView = new ModelAndView("alumnos");
         // Set ID
@@ -75,6 +90,29 @@ public class AlumnoController {
         modelView.addObject("isAdded", true);
         
         System.out.println(alumnoService.findAll());
+        return modelView;
+    }
+    
+    */
+    
+    //se agrega modificacion en la generacion de id de alumno
+    
+    @PostMapping("/guardar-alumno")
+    public ModelAndView guardarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO) {
+        ModelAndView modelView = new ModelAndView("alumnos");
+        
+        // Obtener carrera seleccionada por ID
+        //Carrera carreraSeleccionada = carreraMapper.toCarrera(carreraService.findById(alumnoDTO.getCarreraId()));
+        //alumnoDTO.setCarrera(carreraSeleccionada); // Asignar la carrera al alumnoDTO
+        CarreraDTO carreraDTO = carreraService.findById(alumnoDTO.getCarreraId());
+        alumnoDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+        
+        alumnoDTO.setEstado(true); // Establecer estado por defecto
+        alumnoService.save(alumnoDTO); // Guardar alumno
+        
+        modelView.addObject("alumnos", alumnoService.findAll());
+        modelView.addObject("titulo", "Alumnos");
+        modelView.addObject("isAdded", true);
         return modelView;
     }
 
@@ -95,6 +133,9 @@ public class AlumnoController {
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
         model.addAttribute("alumno", alumnoMapper.toAlumno(alumnoEncontrado) );
+        
+        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        
         System.out.println(alumnoEncontrado);
         return "alumno-form";
     }

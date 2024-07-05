@@ -4,6 +4,7 @@ package ar.edu.unju.fi.controller;
 
 import ar.edu.unju.fi.dto.DocenteDTO;
 import ar.edu.unju.fi.service.IDocenteService;
+import ar.edu.unju.fi.service.IMateriaService;
 
 import java.util.UUID;
 
@@ -22,9 +23,13 @@ public class DocenteController {
     private DocenteDTO docenteDTO;
     
     
-    @Qualifier("docenteServiceCollection")
+    @Qualifier("docenteServiceMySql")
     @Autowired
     private IDocenteService docenteService;
+    
+    @Qualifier("materiaServiceMySql")
+    @Autowired
+    private IMateriaService materiaService;
     
 
     /**
@@ -52,6 +57,8 @@ public class DocenteController {
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteDTO);
+        //se agrega materia
+        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
@@ -66,6 +73,12 @@ public class DocenteController {
         ModelAndView modelView = new ModelAndView("docentes");
         docenteDTO.setIdDocente((long) 40);
         docenteDTO.setEstado(true);
+        
+        // Validar si materiaId está presente
+        if (docenteDTO.getMateriaId() == null) {
+            throw new RuntimeException("El ID de la materia no puede ser nulo");
+        }
+        
         docenteService.save(docenteDTO);
         modelView.addObject("docentes", docenteService.findAll());
         modelView.addObject("titulo", "Docentes");
@@ -88,6 +101,8 @@ public class DocenteController {
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteEncontrado);
+        
+        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
@@ -100,7 +115,8 @@ public class DocenteController {
      */
     @PostMapping("modificar-docente")
     public String editarAlumno(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
-        docenteService.edit(docenteDTO);
+        System.out.println(docenteDTO);
+    	docenteService.edit(docenteDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/docentes/listado";
     }

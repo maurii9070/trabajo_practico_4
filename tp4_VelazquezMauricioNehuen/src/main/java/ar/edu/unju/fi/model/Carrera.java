@@ -38,5 +38,18 @@ public class Carrera {
 
     @OneToMany(mappedBy = "carrera")
     List<Materia> materias = new ArrayList<Materia>();
+    
+    
+    @Override
+    public String toString() {
+        return "Carrera{" +
+               "idCarrera=" + idCarrera +
+               ", codigo='" + codigo + '\'' +
+               ", nombre='" + nombre + '\'' +
+               ", cantidadAnios=" + cantidadAnios +
+               ", estado=" + estado +
+               // No incluir la relación alumnos y materias directamente en toString()
+               '}';
+    }
 
 }

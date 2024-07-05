@@ -45,15 +45,18 @@ public class MateriaController {
     @Autowired
     private CarreraMapper carreraMapper;
     
-    @Qualifier("docenteServiceCollection")
+    // @Qualifier("docenteServiceCollection")
+    @Qualifier("docenteServiceMySql")
     @Autowired
     private IDocenteService docenteService;
     
-    @Qualifier("carreraServiceCollection")
+    // @Qualifier("carreraServiceCollection")
+    @Qualifier("carreraServiceMySql")
     @Autowired
     private ICarreraService carreraService;
     
-    @Qualifier("materiaServiceCollection")
+    // @Qualifier("materiaServiceCollection")
+    @Qualifier("materiaServiceMySql")
     @Autowired
     private IMateriaService materiaService;
 
@@ -96,6 +99,7 @@ public class MateriaController {
      * @param materiaDTO objeto que representa una materia
      * @return la vista materias.html
      */
+    /*
     @PostMapping("/guardar-materia")
     public ModelAndView guardarMateria(@ModelAttribute("carrera") MateriaDTO materiaDTO) {
         ModelAndView modelView = new ModelAndView("materias");
@@ -111,6 +115,23 @@ public class MateriaController {
             modelView.addObject("isAdded", true);
         return modelView;
     }
+    
+    */
+    
+    @PostMapping("/guardar-materia")
+    public ModelAndView guardarMateria(@ModelAttribute("materia") MateriaDTO materiaDTO) {
+        ModelAndView modelView = new ModelAndView("materias");
+        materiaDTO.setEstado(true);
+        docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
+        carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
+        materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
+        materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+        materiaService.save(materiaDTO);
+        modelView.addObject("materias", materiaService.findAll());
+        modelView.addObject("titulo", "Materias");
+        modelView.addObject("isAdded", true);
+        return modelView;
+    }
 
     /**
      * Metodo que permite mostrar la pagina de editar materia
@@ -119,11 +140,28 @@ public class MateriaController {
      * @param id codigo de la materia a editar
      * @return la vista materia-form.html
      */
-    @GetMapping("/editar-materia/{id}")
+    /*
+    @GetMapping("/editar-materia/{id}")    
     public String getEditarMateriaPage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
         MateriaDTO materiaEncontrada = new MateriaDTO();
         materiaEncontrada = materiaService.findById(id);
+        model.addAttribute("titulo", "Materias");
+        model.addAttribute("edicion", edicion);
+        model.addAttribute("materia", materiaEncontrada);
+        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("docentes", docenteService.findAll());
+        return "materia-form";
+    }
+    
+    */
+    
+    // directamente asigno el resultado de la busqueda a materiaEncontrada
+    
+    @GetMapping("/editar-materia/{id}")
+    public String getEditarMateriaPage(Model model, @PathVariable(value = "id") Long id) {
+        boolean edicion = true;
+        MateriaDTO materiaEncontrada = materiaService.findById(id);
         model.addAttribute("titulo", "Materias");
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaEncontrada);

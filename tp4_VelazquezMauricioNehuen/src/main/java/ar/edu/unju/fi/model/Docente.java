@@ -38,4 +38,9 @@ public class Docente {
     @OneToOne
     @JoinColumn(name = "mat_id")
     private Materia materia;
+    
+    
+    @Transient
+    private Long materiaId; // Campo para almacenar el ID de la materia seleccionada desde el formulario
+    
 }

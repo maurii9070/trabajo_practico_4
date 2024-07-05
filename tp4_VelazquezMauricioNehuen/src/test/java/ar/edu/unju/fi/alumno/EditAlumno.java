@@ -22,7 +22,7 @@ class EditAlumno {
 	@Test
 	void editAlumno() {
 		Alumno alumno= new Alumno(null,"40565353", "Nehuen", "Velazquezzzzzzzzzzz", "mauricio@correo.com", "388412345",
-                LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null, null);
+                LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null, null, null);
 		alumno.setIdAlumno(25L);
 
 		alumnoRepository.save(alumno);
