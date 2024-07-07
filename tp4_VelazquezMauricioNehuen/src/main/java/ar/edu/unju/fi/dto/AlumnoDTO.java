@@ -27,7 +27,7 @@ public class AlumnoDTO {
     private String lu;
     private boolean estado;
     
-    private Long carreraId; // Nuevo campo para almacenar el ID de la carrera asociada
+    
     
     private Carrera carrera; // Nuevo campo para almacenar la entidad de la carrera asociada
     List<MateriaDTO> materias;

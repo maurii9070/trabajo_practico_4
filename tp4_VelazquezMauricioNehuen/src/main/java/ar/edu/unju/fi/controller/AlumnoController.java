@@ -9,6 +9,7 @@ import ar.edu.unju.fi.model.Alumno;
 import ar.edu.unju.fi.model.Carrera;
 import ar.edu.unju.fi.service.IAlumnoService;
 import ar.edu.unju.fi.service.ICarreraService;
+import ar.edu.unju.fi.service.IMateriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,9 @@ public class AlumnoController {
     @Autowired
     private CarreraMapper carreraMapper; // Inyecta el mapper de Carrera
     
+    @Qualifier("materiaServiceMySql")
+    @Autowired
+    private IMateriaService materiaService;
     /**
      * Metodo que permite mostrar la pagina de alumnos
      *
@@ -146,7 +150,14 @@ public class AlumnoController {
      */
     @PostMapping("modificar-alumno")
     public String editarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO, RedirectAttributes redirectAttributes) {
-        alumnoService.edit(alumnoDTO);
+        
+    	if(materiaService.findByAlumno(alumnoDTO.getIdAlumno()).isEmpty()) {
+        	alumnoService.edit(alumnoDTO);
+        }else {
+        	alumnoDTO.setMaterias(materiaService.findByAlumno(alumnoDTO.getIdAlumno()));
+        	alumnoService.edit(alumnoDTO);
+        }
+    	alumnoService.edit(alumnoDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/alumnos/listado";
     }
