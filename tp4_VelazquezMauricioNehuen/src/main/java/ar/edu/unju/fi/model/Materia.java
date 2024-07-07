@@ -39,7 +39,8 @@ public class Materia {
     @Column(name = "mat_estado")
     private boolean estado;
 
-    @OneToOne(mappedBy = "materia")
+    @OneToOne
+    @JoinColumn(name = "doc_id")
     private Docente docente;
 
     @ManyToOne
