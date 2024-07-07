@@ -44,13 +44,12 @@
                         <td>
                             <a
                                 class="btn btn-warning"
-                                th:href="@{/materias/editar-materia/{id}(id=${materia.idMateria})}"
+                                th:href="@{/materias/editar-materia/{codigo}(codigo=${materia.codigo})}"
                             >Editar</a>
                             <a
                                 class="btn btn-danger"
-                                th:data-id="${materia.idMateria}"
                                 th:data-codigo="${materia.codigo}"
-                                onclick="confirmDelete(this.getAttribute('data-codigo'),this.getAttribute('data-id'))"
+                                onclick="confirmDelete(this.getAttribute('data-codigo'))"
                             >Eliminar</a>
                         </td>
                     </tr>
@@ -66,9 +65,9 @@
              * Confirmar eliminación de una materia
              * @param codigo
              */
-            function confirmDelete(codigo,id) {
+            function confirmDelete(codigo) {
                 if (confirm('¿Está seguro que desea eliminar la materia de codigo: ' + codigo + '?')) {
-                    window.location.href = '/materias/eliminar-materia/' + id;
+                    window.location.href = '/materias/eliminar-materia/' + codigo;
                 }
             }
 

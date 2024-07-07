@@ -3,12 +3,9 @@ package ar.edu.unju.fi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
-import ar.edu.unju.fi.model.Carrera;
+import java.time.LocalDate;
 
 @Component
 @Data
@@ -16,7 +13,6 @@ import ar.edu.unju.fi.model.Carrera;
 @AllArgsConstructor
 public class AlumnoDTO {
 
-	private Long idAlumno;
     private String dni;
     private String nombre;
     private String apellido;
@@ -25,10 +21,4 @@ public class AlumnoDTO {
     private String fechaNacimiento;
     private String domicilio;
     private String lu;
-    private boolean estado;
-    
-    private Long carreraId; // Nuevo campo para almacenar el ID de la carrera asociada
-    
-    private Carrera carrera; // Nuevo campo para almacenar la entidad de la carrera asociada
-    List<MateriaDTO> materias;
 }
