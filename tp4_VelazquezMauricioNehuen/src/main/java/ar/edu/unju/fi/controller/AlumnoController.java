@@ -99,12 +99,9 @@ public class AlumnoController {
     
     @PostMapping("/guardar-alumno")
     public ModelAndView guardarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO) {
+    	
         ModelAndView modelView = new ModelAndView("alumnos");
-        
-        // Obtener carrera seleccionada por ID
-        //Carrera carreraSeleccionada = carreraMapper.toCarrera(carreraService.findById(alumnoDTO.getCarreraId()));
-        //alumnoDTO.setCarrera(carreraSeleccionada); // Asignar la carrera al alumnoDTO
-        CarreraDTO carreraDTO = carreraService.findById(alumnoDTO.getCarreraId());
+        CarreraDTO carreraDTO = carreraService.findById(alumnoDTO.getCarrera().getIdCarrera());
         alumnoDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
         
         alumnoDTO.setEstado(true); // Establecer estado por defecto
@@ -136,7 +133,7 @@ public class AlumnoController {
         
         model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
         
-        System.out.println(alumnoEncontrado);
+        
         return "alumno-form";
     }
 
