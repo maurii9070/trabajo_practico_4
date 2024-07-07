@@ -71,13 +71,8 @@ public class DocenteController {
     @PostMapping("/guardar-docente")
     public ModelAndView guardarDocente(@ModelAttribute("carrera") DocenteDTO docenteDTO) {
         ModelAndView modelView = new ModelAndView("docentes");
-        docenteDTO.setIdDocente((long) 40);
         docenteDTO.setEstado(true);
         
-        // Validar si materiaId está presente
-        if (docenteDTO.getMateriaId() == null) {
-            throw new RuntimeException("El ID de la materia no puede ser nulo");
-        }
         
         docenteService.save(docenteDTO);
         modelView.addObject("docentes", docenteService.findAll());
