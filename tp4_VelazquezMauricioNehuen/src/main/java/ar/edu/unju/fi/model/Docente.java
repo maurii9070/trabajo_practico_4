@@ -35,12 +35,9 @@ public class Docente {
     @Column(name = "doc_estado")
     private boolean estado;
 
-    @OneToOne
-    @JoinColumn(name = "mat_id")
+    @OneToOne(mappedBy = "docente")
     private Materia materia;
     
-    
-    @Transient
-    private Long materiaId; // Campo para almacenar el ID de la materia seleccionada desde el formulario
+
     
 }

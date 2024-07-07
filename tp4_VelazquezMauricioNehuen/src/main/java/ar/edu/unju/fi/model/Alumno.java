@@ -60,12 +60,7 @@ public class Alumno {
     @JoinColumn(name = "car_id")
     private Carrera carrera;
     
-    @Transient
-    private Long carreraId; // Campo para almacenar el ID de la carrera seleccionada desde el formulario
     
-    /*
-     * esta modificacion es para evitar un error en la vista
-     */
     
     @Override
     public String toString() {

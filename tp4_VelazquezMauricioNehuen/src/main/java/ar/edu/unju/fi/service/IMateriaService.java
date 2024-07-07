@@ -16,4 +16,6 @@ public interface IMateriaService {
 	void deleteById(Long id);
 	
 	void edit(MateriaDTO materiaDTO);
+	
+	List<MateriaDTO> findByAlumno(Long id);
 }
