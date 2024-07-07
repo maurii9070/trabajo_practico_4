@@ -33,6 +33,8 @@ public class ConsultaController {
 		model.addAttribute("materias", materiaService.findAll());
 		model.addAttribute("carreras", carreraService.findAll());
         model.addAttribute("titulo", "Consultas");
+        model.addAttribute("nombre", false);
+        model.addAttribute("texto","");
         return "consultas";
     }
 	
@@ -58,6 +60,8 @@ public class ConsultaController {
 		model.addAttribute("carreras", carreraService.findAll());
 		model.addAttribute("alumnos", alumnoService.findByCarrera(id));
 		model.addAttribute("titulo", "Alumnos");
+		model.addAttribute("nombre", true);
+		model.addAttribute("texto", "Carrera: "+ carreraService.findById(id).getNombre());
 		return "consultas";
 	}
 	
@@ -67,6 +71,8 @@ public class ConsultaController {
 		model.addAttribute("carreras", carreraService.findAll());
 		model.addAttribute("alumnos", alumnoService.findByMateria(id));
 		model.addAttribute("titulo", "Alumnos");
+		model.addAttribute("nombre", true);
+		model.addAttribute("texto", "Materia: "+ materiaService.findById(id).getNombre());
 		return "consultas";
 	}
 }

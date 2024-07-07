@@ -184,7 +184,7 @@ public class MateriaController {
         materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
         materiaService.edit(materiaDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
-        System.out.println(materiaDTO);
+        
         return "redirect:/materias/listado";
     }
 
