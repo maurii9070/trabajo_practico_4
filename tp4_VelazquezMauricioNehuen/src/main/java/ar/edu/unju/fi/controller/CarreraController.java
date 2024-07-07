@@ -22,7 +22,7 @@ public class CarreraController {
     @Autowired
     private CarreraDTO carreraDTO;
     
-    @Qualifier("carreraServiceCollection")
+    @Qualifier("carreraServiceMySql")
     @Autowired
     private ICarreraService carreraService;
 

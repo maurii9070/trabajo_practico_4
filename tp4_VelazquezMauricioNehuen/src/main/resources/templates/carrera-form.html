@@ -14,8 +14,15 @@
                 <form
                     th:action="${edicion} ? '/carreras/modificar-carrera' : '/carreras/guardar-carrera'"
                     th:object="${carrera}"
-                    method="post"
-                >
+                    method="post">
+                    
+                    <div th:if="${edicion}">
+                    <input type="hidden"
+                           name="idCarrera"
+                           th:field="*{idCarrera}" />
+                	</div>
+                    
+                    
                     <div class="mb-3">
                         <label for="codigo" class="form-label">Código</label>
                         <input
@@ -72,7 +79,7 @@
                                 name="flexRadioDefault"
                                 id="flexRadioDefault2"
                                 value="false"
-                                th:field="*{estado}"
+                                th:checked="${!carrera.estado}"
                             >
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Inactiva
