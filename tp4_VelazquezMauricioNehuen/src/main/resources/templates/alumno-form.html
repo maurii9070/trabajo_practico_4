@@ -21,7 +21,7 @@
                     <input type="hidden"
                            name="idAlumno"
                            th:field="*{idAlumno}" />
-                </div>
+                	</div>
                    
                    
                     <div class="mb-3">
@@ -31,11 +31,17 @@
                             th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
                             id="codigo"
                             name="codigo"
-                            required
                             th:field="*{lu}"
                             th:readonly="${edicion}"
+                            th:classappend="${#fields.hasErrors('lu')} ? 'is-invalid' : ''"
                         />
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('lu')}" 
+							th:errors="*{lu}">
+						</p>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="dni" class="form-label">D.N.I</label>
                         <input
@@ -43,10 +49,15 @@
                             th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
                             id="dni"
                             name="dni"
-                            required
                             th:field="*{dni}"
                             th:readonly="${edicion}"
+                            th:classappend="${#fields.hasErrors('dni')} ? 'is-invalid' : ''"
                         />
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('dni')}" 
+							th:errors="*{dni}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -55,9 +66,14 @@
                             class="form-control"
                             id="nombre"
                             name="nombre"
-                            required
                             th:field="*{nombre}"
+                            th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('nombre')}" 
+							th:errors="*{nombre}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
@@ -66,9 +82,14 @@
                             class="form-control"
                             id="apellido"
                             name="apellido"
-                            required
                             th:field="*{apellido}"
+                            th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('apellido')}" 
+							th:errors="*{apellido}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Telefono</label>
@@ -77,9 +98,14 @@
                             class="form-control"
                             id="telefono"
                             name="telefono"
-                            required
                             th:field="*{telefono}"
+                            th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('telefono')}" 
+							th:errors="*{telefono}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -88,9 +114,14 @@
                             class="form-control"
                             id="email"
                             name="email"
-                            required
                             th:field="*{email}"
+                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('email')}" 
+							th:errors="*{email}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="fechaNacimiento" class="form-label">Fecha Nacimiento</label>
@@ -99,9 +130,14 @@
                             class="form-control"
                             id="fechaNacimiento"
                             name="fechaNacimiento"
-                            required
                             th:value="*{fechaNacimiento}"
+                            th:classappend="${#fields.hasErrors('fechaNacimiento')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('fechaNacimiento')}" 
+							th:errors="*{fechaNacimiento}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="domicilio" class="form-label">Domicilio</label>
@@ -110,9 +146,14 @@
                             class="form-control"
                             id="domicilio"
                             name="domicilio"
-                            required
                             th:field="*{domicilio}"
+                            th:classappend="${#fields.hasErrors('domicilio')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('domicilio')}" 
+							th:errors="*{domicilio}">
+						</p>
                     </div>
                     
                     
