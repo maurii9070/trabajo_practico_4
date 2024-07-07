@@ -5,7 +5,6 @@ import ar.edu.unju.fi.model.Docente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CollectionDocente {
@@ -17,11 +16,11 @@ public class CollectionDocente {
      */
     public static List<Docente> getDocentes() {
         if (docentes.isEmpty()) {
-            docentes.add(new Docente((long) 1, "D001", "Marcelo", "Ibarra", "ibarra@correo.com", "3884789456", true, null, null));
-            docentes.add(new Docente((long) 2,"D002", "Maria", "Gomez", "maria@correo.com", "3886530123",true,null, null));
-            docentes.add(new Docente((long) 3,"D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745",true,null, null));
-            docentes.add(new Docente((long) 4,"D004", "Ana", "Martinez", "ana@correo.com", "3884569870",true,null, null));
-            docentes.add(new Docente((long) 5,"D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472",true,null, null));
+            docentes.add(new Docente("D001", "Juan", "Perez", "juan@correo.com", "3884552367"));
+            docentes.add(new Docente("D002", "Maria", "Gomez", "maria@correo.com", "3886530123"));
+            docentes.add(new Docente("D003", "Pedro", "Lopez", "pedro@correo.com", "388365401745"));
+            docentes.add(new Docente("D004", "Ana", "Martinez", "ana@correo.com", "3884569870"));
+            docentes.add(new Docente("D005", "Carlos", "Garcia", "carlos@correo.com", "3885620472"));
         }
         return docentes;
     }
@@ -39,10 +38,10 @@ public class CollectionDocente {
 
     /**
      * Elimina un objeto de la clase Docente en el arrayList
-     * @param id Objeto de la clase Docente con atributos modificados
+     * @param legajo Objeto de la clase Docente con atributos modificados
      */
-    public static void eliminarDocente(Long id) {
-        docentes.removeIf(docente -> docente.getIdDocente().equals(id));
+    public static void eliminarDocente(String legajo) {
+        docentes.removeIf(docente -> docente.getLegajo().equals(legajo));
     }
 
     /**
@@ -62,11 +61,11 @@ public class CollectionDocente {
 
     /**
      * Busca un objeto de la clase Docente en el arrayList
-     * @param id Objeto de la clase Docente
+     * @param legajo Objeto de la clase Docente
      * @return Objeto docente
      */
-    public static Docente buscarDocente(Long id) {
-        Predicate<Docente> filterCodigo = docente -> docente.getIdDocente().equals(id);
+    public static Docente buscarDocente(String legajo) {
+        Predicate<Docente> filterCodigo = docente -> docente.getLegajo().equals(legajo);
         Optional<Docente> docente = docentes.stream().filter(filterCodigo).findFirst();
         return docente.orElse(null);
     }

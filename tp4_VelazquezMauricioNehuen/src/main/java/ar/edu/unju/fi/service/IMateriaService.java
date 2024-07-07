@@ -1,19 +1,17 @@
 package ar.edu.unju.fi.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import ar.edu.unju.fi.dto.MateriaDTO;
-import ar.edu.unju.fi.model.Materia;
 
 public interface IMateriaService {
 	List<MateriaDTO> findAll();
 	
-	MateriaDTO findById(Long id);
+	MateriaDTO findById(String codigo);
 	
-	Materia save(MateriaDTO materiaDTO);
+	boolean save(MateriaDTO materiaDTO);
 	
-	void deleteById(Long id);
+	void deleteById(String codigo);
 	
 	void edit(MateriaDTO materiaDTO);
 }

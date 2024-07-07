@@ -16,14 +16,6 @@
                     th:object="${docente}"
                     method="post"
                 >
-                    
-                    <div th:if="${edicion}">
-                    <input type="hidden"
-                           name="idDocente"
-                           th:field="*{idDocente}" />
-                </div>
-                    
-                    
                     <div class="mb-3">
                         <label for="codigo" class="form-label">Legajo</label>
                         <input
@@ -80,17 +72,6 @@
                             th:field="*{telefono}"
                         >
                     </div>
-                    
-                    
-                    <div class="mb-3">
-    					<label for="materia" class="form-label">Materia</label>
-    					<select class="form-select" id="materia" name="materia.idMateria" required th:field="*{materia.idMateria}">
-        					<option th:each="materia : ${materias}"
-                				th:value="${materia.idMateria}"
-                				th:text="${materia.nombre}"></option>
-    					</select>
-					</div>
-                    
                     <button
                         type="submit"
                         class="btn btn-primary"

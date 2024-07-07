@@ -3,7 +3,6 @@ package ar.edu.unju.fi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.springframework.stereotype.Component;
 
 @Data
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Component
 public class CarreraDTO {
-	
-	private Long idCarrera;
     private String codigo;
     private String nombre;
     private Byte cantidadAnios;

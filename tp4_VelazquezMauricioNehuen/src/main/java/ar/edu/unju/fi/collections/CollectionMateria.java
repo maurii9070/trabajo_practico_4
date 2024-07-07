@@ -34,12 +34,12 @@ public class CollectionMateria {
     /**
      * Elimina un objeto de la clase Materia en el arrayList
      *
-     * @param id Objeto de la clase Materia con atributos modificados
+     * @param codigoMateria Objeto de la clase Materia con atributos modificados
      */
-    public static void eliminarMateria(Long id) {
+    public static void eliminarMateria(String codigoMateria) {
         Iterator<Materia> iterator = materias.iterator();
         while (iterator.hasNext()) {
-            if (iterator.next().getIdMateria().equals(id)) {
+            if (iterator.next().getCodigo().equals(codigoMateria)) {
                 iterator.remove();
             }
         }
@@ -66,11 +66,11 @@ public class CollectionMateria {
     /**
      * Busca un objeto de la clase Materia en el arrayList
      *
-     * @param id Objeto de la clase Materia con atributos modificados
+     * @param codigoMateria Objeto de la clase Materia con atributos modificados
      * @return Objeto de la clase Materia
      */
-    public static Materia buscarMateria(Long id) {
-        Predicate<Materia> filterCodigo = m -> m.getIdMateria().equals(id);
+    public static Materia buscarMateria(String codigoMateria) {
+        Predicate<Materia> filterCodigo = m -> m.getCodigo().equals(codigoMateria);
         Optional<Materia> materia = materias.stream().filter(filterCodigo).findFirst();
         return materia.orElse(null);
     }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CollectionCarrera {
@@ -20,12 +19,12 @@ public class CollectionCarrera {
      */
     public static List<Carrera> getCarreras() {
         if (carreras.isEmpty()) {
-            carreras.add(new Carrera((long) 1,"INF001", "Ingeniería en Informática", (byte) 5, true,null,null));
-            carreras.add(new Carrera((long) 2,"IND001", "Ingeniería Industrial", (byte) 5, true,null,null));
-            carreras.add(new Carrera((long) 3,"APU001", "A. Programador Universitario", (byte) 4, true,null,null));
-            carreras.add(new Carrera((long) 4,"MIN001", "Ingenieria en Minas", (byte) 5, false,null,null));
-            carreras.add(new Carrera((long) 5,"ELE001", "Ingenieria Electrica", (byte) 5, true,null,null));
-            carreras.add(new Carrera((long) 6,"MEC001", "Ingenieria Mecanica", (byte) 5, false,null,null));
+            carreras.add(new Carrera("INF001", "Ingeniería en Informática", (byte) 5, true));
+            carreras.add(new Carrera("IND001", "Ingeniería Industrial", (byte) 5, true));
+            carreras.add(new Carrera("APU001", "A. Programador Universitario", (byte) 4, true));
+            carreras.add(new Carrera("MIN001", "Ingenieria en Minas", (byte) 5, false));
+            carreras.add(new Carrera("ELE001", "Ingenieria Electrica", (byte) 5, true));
+            carreras.add(new Carrera("MEC001", "Ingenieria Mecanica", (byte) 5, false));
         }
         return carreras;
     }
@@ -46,10 +45,10 @@ public class CollectionCarrera {
      *
      * @param codigoCarrera Objeto de la clase Carrera con atributos modificados
      */
-    public static void eliminarCarerra(Long id) {
+    public static void eliminarCarerra(String codigoCarrera) {
         Iterator<Carrera> iterator = carreras.iterator();
         while (iterator.hasNext()) {
-            if (iterator.next().getIdCarrera().equals(id)) {
+            if (iterator.next().getCodigo().equals(codigoCarrera)) {
                 iterator.remove();
             }
         }
@@ -78,8 +77,8 @@ public class CollectionCarrera {
      * @param codigoCarrera Objeto de la clase Carrera con atributos modificados
      * @return Objeto de la clase Carrera
      */
-    public static Carrera buscarCarrera(Long id) {
-        Predicate<Carrera> filterCodigo = c -> c.getIdCarrera().equals(id);
+    public static Carrera buscarCarrera(String codigoCarrera) {
+        Predicate<Carrera> filterCodigo = c -> c.getCodigo().equals(codigoCarrera);
         Optional<Carrera> carrera = carreras.stream().filter(filterCodigo).findFirst();
         if (carrera.isPresent()) {
             return carrera.get();
