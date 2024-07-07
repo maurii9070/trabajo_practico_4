@@ -16,6 +16,14 @@
                     th:object="${materia}"
                     method="post"
                 >
+                    
+                    <div th:if="${edicion}">
+                    <input type="hidden"
+                           name="idMateria"
+                           th:field="*{idMateria}" />
+                </div>
+                    
+                    
                     <div class="mb-3">
                         <label for="codigo" class="form-label">Codigo</label>
                         <input
@@ -46,13 +54,13 @@
                             id="carrera"
                             name="carrera"
                             required
-                            th:field="*{carrera.codigo}"
+                            th:field="*{carrera.idCarrera}"
                         >
                             <option value="">-- Seleccione una carrera --</option>
                             <option
                                 th:each="carrera : ${carreras}"
                                 th:text="${carrera.nombre}"
-                                th:value="${carrera.codigo}"
+                                th:value="${carrera.idCarrera}"
                             ></option>
                         </select>
                     </div>
@@ -106,12 +114,12 @@
                             id="docentes"
                             name="docentes"
                             required
-                            th:field="*{docente.legajo}"
+                            th:field="*{docente.idDocente}"
                         >
                             <option value="">-- Seleccione una modalidad --</option>
                             <option
                                 th:each="docente : ${docentes}"
-                                th:value="${docente.legajo}"
+                                th:value="${docente.idDocente}"
                                 th:text="${docente.apellido} + ' ' + ${docente.nombre}"
                                 th:selected="${materia.docente}"
                             ></option>

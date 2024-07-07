@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.service.imp;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Service;
 import ar.edu.unju.fi.collections.CollectionDocente;
 import ar.edu.unju.fi.dto.DocenteDTO;
 import ar.edu.unju.fi.mapper.DocenteMapper;
+import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.service.IDocenteService;
 
-@Service
-
+@Service("docenteServiceCollection")
 public class DocenteServiceImpl implements IDocenteService {
 	
 	@Autowired
@@ -26,25 +27,21 @@ public class DocenteServiceImpl implements IDocenteService {
 	}
 
 	@Override
-	public DocenteDTO findById(String legajo) {
-		
-		DocenteDTO docenteDTO = docenteMapper.toDocenteDTO(CollectionDocente.buscarDocente(legajo));
-		
+	public DocenteDTO findById(Long id) {
+		DocenteDTO docenteDTO = docenteMapper.toDocenteDTO(CollectionDocente.buscarDocente(id));
 		return docenteDTO;
 	}
 
 	@Override
-	public boolean save(DocenteDTO docenteDTO) {
-		
-		boolean respuesta = CollectionDocente.agregarDocente(docenteMapper.toDocente(docenteDTO));
-		
-		return respuesta;
+	public Docente save(DocenteDTO docenteDTO) {
+		CollectionDocente.agregarDocente(docenteMapper.toDocente(docenteDTO));
+		return CollectionDocente.buscarDocente(docenteDTO.getIdDocente());
 	}
 
 	@Override
-	public void deleteById(String legajo) {
+	public void deleteById(Long id) {
 		
-		CollectionDocente.eliminarDocente(legajo);
+		CollectionDocente.eliminarDocente(id);
 
 	}
 

@@ -3,11 +3,13 @@ package ar.edu.unju.fi.controller;
 
 
 import ar.edu.unju.fi.dto.DocenteDTO;
-
-import ar.edu.unju.fi.model.Docente;
 import ar.edu.unju.fi.service.IDocenteService;
+import ar.edu.unju.fi.service.IMateriaService;
+
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,14 @@ public class DocenteController {
     @Autowired
     private DocenteDTO docenteDTO;
     
+    
+    @Qualifier("docenteServiceMySql")
     @Autowired
     private IDocenteService docenteService;
     
+    @Qualifier("materiaServiceMySql")
+    @Autowired
+    private IMateriaService materiaService;
     
 
     /**
@@ -50,21 +57,31 @@ public class DocenteController {
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteDTO);
+        //se agrega materia
+        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
     /**
      * Metodo que permite guardar un nuevo docente
      *
-     * @param docente objeto que representa un docente
+     * @param docenteDTO objeto que representa un docente
      * @return la vista docentes.html
      */
     @PostMapping("/guardar-docente")
-    public ModelAndView guardarDocente(@ModelAttribute("carrera") Docente docente) {
+    public ModelAndView guardarDocente(@ModelAttribute("carrera") DocenteDTO docenteDTO) {
         ModelAndView modelView = new ModelAndView("docentes");
+        docenteDTO.setIdDocente((long) 40);
+        docenteDTO.setEstado(true);
+        
+        // Validar si materiaId está presente
+        if (docenteDTO.getMateriaId() == null) {
+            throw new RuntimeException("El ID de la materia no puede ser nulo");
+        }
+        
         docenteService.save(docenteDTO);
         modelView.addObject("docentes", docenteService.findAll());
-        modelView.addObject("titulo", "Alumnos");
+        modelView.addObject("titulo", "Docentes");
         modelView.addObject("isAdded", true);
         return modelView;
     }
@@ -73,30 +90,33 @@ public class DocenteController {
      * Metodo que permite mostrar la pagina de editar docente
      *
      * @param model  objeto que permite agregar atributos y enviarlos a la vista
-     * @param legajo legajo del docente a editar
+     * @param id legajo del docente a editar
      * @return la vista docente-form.html
      */
-    @GetMapping("/editar-docente/{legajo}")
-    public String getEditarDocentePage(Model model, @PathVariable(value = "legajo") String legajo) {
+    @GetMapping("/editar-docente/{id}")
+    public String getEditarDocentePage(Model model, @PathVariable(value = "id") Long id) {
         boolean edicion = true;
         DocenteDTO docenteEncontrado = new DocenteDTO();
-        docenteEncontrado = docenteService.findById(legajo);
+        docenteEncontrado = docenteService.findById(id);
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteEncontrado);
+        
+        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
     /**
      * Metodo que permite modificar un docente
      *
-     * @param docente            objeto que representa un docente con los datos modificados
+     * @param docenteDTO            objeto que representa un docente con los datos modificados
      * @param redirectAttributes objeto que permite enviar mensajes a la vista
      * @return la vista docentes.html
      */
     @PostMapping("modificar-docente")
     public String editarAlumno(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
-        docenteService.edit(docenteDTO);
+        System.out.println(docenteDTO);
+    	docenteService.edit(docenteDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/docentes/listado";
     }
@@ -104,12 +124,12 @@ public class DocenteController {
     /**
      * Metodo que permite eliminar un docente
      *
-     * @param legajo legajo del docente a eliminar
+     * @param id legajo del docente a eliminar
      * @return la vista docentes.html
      */
-    @GetMapping("/eliminar-docente/{legajo}")
-    public String eliminarAlumno(@PathVariable(value = "legajo") String legajo) {
-        docenteService.deleteById(legajo);
+    @GetMapping("/eliminar-docente/{id}")
+    public String eliminarAlumno(@PathVariable(value = "id") Long id) {
+        docenteService.deleteById(id);
         return "redirect:/docentes/listado";
     }
 }

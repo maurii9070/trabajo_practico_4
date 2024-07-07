@@ -6,69 +6,72 @@
         <header data-th-replace="~{/layouts/header :: header}"></header>
 
         <section class="container">
-            <h2 class="text-center my-5">Listado de Materias</h2>
+            <h2 class="text-center my-5">Listado de Carreras</h2>
 
             <div class="d-flex justify-content-end mb-2">
-                <a th:href="@{/materias/nueva-materia}" class="btn btn-primary">Nueva Materia</a>
+                <a th:href="@{/carreras-sql/nueva-carrera}" class="btn btn-primary">Nueva Carrera</a>
             </div>
 
             <div th:if="${isAdded}" id="alert" class="alert alert-success" role="alert">
-                Materia agregada correctamente
+                Carrera agregada correctamente
             </div>
 
             <div th:if="${isUpdated}" id="alertEdit" class="alert alert-primary" role="alert">
-                Materia modificada correctamente
+                Carrera modificada correctamente
             </div>
-
-            <div th:if="${materias.isEmpty()}" class="alert alert-warning text-center fw-bold">
-                No hay materias cargadas. Puede crear una nueva materia haciendo click en el botón "Nueva Materia".
-            </div>
-            <table class="table table-striped" th:unless="${materias.isEmpty()}">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Codigo</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Curso</th>
-                        <th scope="col">Docente</th>
-                        <th scope="col">Carrera</th>
+                        <th scope="col">Duración</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="materia : ${materias}">
-                        <td th:text="${materia.codigo}"></td>
-                        <td th:text="${materia.nombre}"></td>
-                        <td th:text="${materia.curso}"></td>
-                        <td th:text="${materia.docente} ? ${materia.docente.apellido} + ' ' + ${materia.docente.nombre} : 'No asignado'"></td>
-                        <td th:text="${materia.carrera} ? ${materia.carrera.nombre} : 'No asigando'"></td>
+                    <tr th:each="carrera : ${carreras}">
+                        <td th:text="${carrera.codigo}"></td>
+                        <td th:text="${carrera.nombre}"></td>
+                        <td th:text="${carrera.cantidadAnios} + ' años'"></td>
+                        <td>
+                            <span
+                                th:if="${carrera.estado}"
+                                class="bg-success rounded-5 px-2 py-1 text-white fw-semibold"
+                            >Activa</span>
+                            <span
+                                th:unless="${carrera.estado}"
+                                class="bg-danger rounded-5 px-2 py-1 text-white fw-semibold"
+                            >Inactiva</span>
+                        </td>
                         <td>
                             <a
+                                th:href="@{/carreras-sql/editar-carrera/{id} (id=${carrera.idCarrera})}"
                                 class="btn btn-warning"
-                                th:href="@{/materias/editar-materia/{id}(id=${materia.idMateria})}"
                             >Editar</a>
                             <a
+                                th:data-codigo="${carrera.codigo}"
+                                th:data-id="${carrera.idCarrera}"
                                 class="btn btn-danger"
-                                th:data-id="${materia.idMateria}"
-                                th:data-codigo="${materia.codigo}"
                                 onclick="confirmDelete(this.getAttribute('data-codigo'),this.getAttribute('data-id'))"
                             >Eliminar</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
         </section>
 
         <footer data-th-replace="~{/layouts/footer :: footer}"></footer>
 
         <script>
             /**
-             * Confirmar eliminación de una materia
+             * Confirmar eliminación de una carrera
              * @param codigo
+             * @param id
              */
-            function confirmDelete(codigo,id) {
-                if (confirm('¿Está seguro que desea eliminar la materia de codigo: ' + codigo + '?')) {
-                    window.location.href = '/materias/eliminar-materia/' + id;
+            function confirmDelete(codigo, id) {
+                if (confirm('¿Está seguro que desea eliminar la carrera de codigo: ' + codigo + '?')) {
+                    window.location.href = '/carreras-sql/eliminar-carrera/' + id;
                 }
             }
 
@@ -77,12 +80,11 @@
                 document.getElementById('alert').style.display = 'none';
             }, 3000);
 
-            // Ocultar alerta de edicion
+            // Ocultar alerta de edición
             setTimeout(() => {
                 document.getElementById('alertEdit').style.display = 'none';
             }, 3000);
         </script>
-
         <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     </body>
 </html>
