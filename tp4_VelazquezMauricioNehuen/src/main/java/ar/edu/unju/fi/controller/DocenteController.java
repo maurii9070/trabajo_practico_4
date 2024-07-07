@@ -96,8 +96,6 @@ public class DocenteController {
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteEncontrado);
-        
-        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
@@ -109,8 +107,8 @@ public class DocenteController {
      * @return la vista docentes.html
      */
     @PostMapping("modificar-docente")
-    public String editarAlumno(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
-        System.out.println(docenteDTO);
+    public String editarDocente(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
+        
     	docenteService.edit(docenteDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/docentes/listado";

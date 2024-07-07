@@ -28,7 +28,7 @@ class InsertAlumno {
 	@Test
 	void guardarAlumno() {
 		Alumno alumno= new Alumno(null,"40565353", "Nazarena", "Velazquez", "mauricio@correo.com", "388412345",
-                LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null, null, null);
+                LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null, null);
 
 		List<Materia> materias = new ArrayList<>();
 

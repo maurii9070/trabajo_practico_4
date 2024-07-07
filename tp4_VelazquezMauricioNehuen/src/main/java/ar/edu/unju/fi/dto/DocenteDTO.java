@@ -22,6 +22,6 @@ public class DocenteDTO {
     private String telefono;
     private boolean estado;
     
-    private Long materiaId; // Campo para almacenar el ID de la materia
+//    private Long materiaId; // Campo para almacenar el ID de la materia
     private Materia materia;
 }

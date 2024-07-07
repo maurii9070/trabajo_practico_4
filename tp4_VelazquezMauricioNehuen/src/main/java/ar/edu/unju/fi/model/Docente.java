@@ -38,8 +38,6 @@ public class Docente {
     @OneToOne(mappedBy = "docente")
     private Materia materia;
     
-    
-    @Transient
-    private Long materiaId; // Campo para almacenar el ID de la materia seleccionada desde el formulario
+
     
 }

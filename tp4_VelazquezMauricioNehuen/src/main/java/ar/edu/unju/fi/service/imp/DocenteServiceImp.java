@@ -44,20 +44,7 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public Docente save(DocenteDTO docenteDTO) {
-		//return docenteRepository.save(docenteMapper.toDocente(docenteDTO));
-		// se hacen modificaciones para asegurar el mapeo de docenteDTO
-		Docente docente = docenteMapper.toDocente(docenteDTO);
-		
-		 // Validar que el ID de la materia no sea nulo
-	    if (docenteDTO.getMateriaId() != null) {
-	        Materia materia = materiaRepository.findById(docenteDTO.getMateriaId()).orElse(null);
-	        docente.setMateria(materia);
-	    } else {
-	        docente.setMateria(null);
-	    }
-
-	    return docenteRepository.save(docente);
-		
+		return docenteRepository.save(docenteMapper.toDocente(docenteDTO));
 	}
 
 	@Override
@@ -71,17 +58,12 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public void edit(DocenteDTO docenteDTO) {
-		//docenteRepository.save(docenteMapper.toDocente(docenteDTO));
 		
-		Docente docente = docenteMapper.toDocente(docenteDTO);
-        Materia materia = materiaRepository.findById(docenteDTO.getMateria().getIdMateria()).orElse(null);
-        docente.setMateria(materia);
-        docente.setMateria(materia);
-        if (docente.getIdDocente() == null) {
+        if (docenteDTO.getIdDocente() == null) {
             throw new RuntimeException("El ID del docente no puede ser nulo");
         }
-        if (docenteRepository.existsById(docente.getIdDocente())) {
-            docenteRepository.save(docente);
+        if (docenteRepository.existsById(docenteDTO.getIdDocente())) {
+        	docenteRepository.save(docenteMapper.toDocente(docenteDTO));
         } else {
             throw new RuntimeException("Docente no encontrado");
         }
