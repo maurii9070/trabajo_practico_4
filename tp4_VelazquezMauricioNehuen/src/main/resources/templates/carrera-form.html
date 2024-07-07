@@ -30,10 +30,15 @@
                             th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
                             id="codigo"
                             name="codigo"
-                            required
                             th:field="*{codigo}"
                             th:readonly="${edicion}"
+                            th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''"
                         />
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('codigo')}" 
+							th:errors="*{codigo}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -42,9 +47,14 @@
                             class="form-control"
                             id="nombre"
                             name="nombre"
-                            required
                             th:field="*{nombre}"
+                            th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('nombre')}" 
+							th:errors="*{nombre}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="cantidadAnios" class="form-label">Duración (años)</label>
@@ -53,9 +63,14 @@
                             class="form-control"
                             id="cantidadAnios"
                             name="cantidadAnios"
-                            required
                             th:field="*{cantidadAnios}"
+                            th:classappend="${#fields.hasErrors('cantidadAnios')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('cantidadAnios')}" 
+							th:errors="*{cantidadAnios}">
+						</p>
                     </div>
                     <div th:if="${edicion}" class="mb-3">
                         <label>Estado</label>
