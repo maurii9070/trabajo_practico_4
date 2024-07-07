@@ -48,4 +48,16 @@ public class AlumnoServiceImpl implements IAlumnoService {
 		
 	}
 
+	@Override
+	public List<AlumnoDTO> findByCarrera(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AlumnoDTO> findByMateria(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
