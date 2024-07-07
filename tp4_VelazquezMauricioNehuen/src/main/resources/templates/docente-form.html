@@ -21,7 +21,7 @@
                     <input type="hidden"
                            name="idDocente"
                            th:field="*{idDocente}" />
-                </div>
+               		 </div>
                     
                     
                     <div class="mb-3">
@@ -31,10 +31,15 @@
                             th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
                             id="codigo"
                             name="codigo"
-                            required
                             th:field="*{legajo}"
                             th:readonly="${edicion}"
+                            th:classappend="${#fields.hasErrors('legajo')} ? 'is-invalid' : ''"
                         />
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('legajo')}" 
+							th:errors="*{legajo}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -43,9 +48,13 @@
                             class="form-control"
                             id="nombre"
                             name="nombre"
-                            required
                             th:field="*{nombre}"
-                        >
+                            th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
+                        ><p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('nombre')}" 
+							th:errors="*{nombre}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
@@ -54,9 +63,14 @@
                             class="form-control"
                             id="apellido"
                             name="apellido"
-                            required
                             th:field="*{apellido}"
+                            th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('apellido')}" 
+							th:errors="*{apellido}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -65,9 +79,14 @@
                             class="form-control"
                             id="email"
                             name="email"
-                            required
                             th:field="*{email}"
+                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('email')}" 
+							th:errors="*{email}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Telefono</label>
@@ -76,9 +95,14 @@
                             class="form-control"
                             id="telefono"
                             name="telefono"
-                            required
                             th:field="*{telefono}"
+                            th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('telefono')}" 
+							th:errors="*{telefono}">
+						</p>
                     </div>
                     
                     
