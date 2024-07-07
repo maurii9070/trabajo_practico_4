@@ -49,4 +49,13 @@ public class AlumnoServiceImp implements IAlumnoService {
 		
 	}
 
+	@Override
+	public List<AlumnoDTO> findByCarrera(Long id) {
+		return alumnoMapper.toAlumnoDTOList(alumnoRepository.findByCarrera(id));
+	}
+
+	@Override
+	public List<AlumnoDTO> findByMateria(Long id) {
+		return alumnoMapper.toAlumnoDTOList(alumnoRepository.findByMateria(id));
+	}
 }

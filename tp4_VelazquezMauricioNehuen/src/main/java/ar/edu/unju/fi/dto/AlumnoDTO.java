@@ -3,6 +3,9 @@ package ar.edu.unju.fi.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import ar.edu.unju.fi.model.Carrera;
@@ -27,4 +30,5 @@ public class AlumnoDTO {
     private Long carreraId; // Nuevo campo para almacenar el ID de la carrera asociada
     
     private Carrera carrera; // Nuevo campo para almacenar la entidad de la carrera asociada
+    List<MateriaDTO> materias;
 }
