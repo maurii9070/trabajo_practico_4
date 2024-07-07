@@ -17,6 +17,7 @@ import ar.edu.unju.fi.service.IAlumnoService;
 import ar.edu.unju.fi.service.ICarreraService;
 import ar.edu.unju.fi.service.IDocenteService;
 import ar.edu.unju.fi.service.IMateriaService;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -89,7 +91,7 @@ public class MateriaController {
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaDTO);
         model.addAttribute("carreras", carreraService.findAll());
-        model.addAttribute("docentes", docenteService.findAll());
+        model.addAttribute("docentes", docenteService.findDocentesSinMateria());
         return "materia-form";
     }
 
@@ -98,35 +100,31 @@ public class MateriaController {
      *
      * @param materiaDTO objeto que representa una materia
      * @return la vista materias.html
-     */
-    /*
+     */    
     @PostMapping("/guardar-materia")
-    public ModelAndView guardarMateria(@ModelAttribute("carrera") MateriaDTO materiaDTO) {
-        ModelAndView modelView = new ModelAndView("materias");
-        materiaDTO.setIdMateria((long) 50);
+    public ModelAndView guardarMateria(@Valid @ModelAttribute("materia") MateriaDTO materiaDTO, BindingResult result) {
+    	if(result.hasErrors()) {
+
+    		ModelAndView modelView = new ModelAndView("materia-form");
+            modelView.addObject("titulo", "Nueva Materia");
+            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("docentes", docenteService.findDocentesSinMateria());
+            modelView.addObject("edicion", false);
+            modelView.addObject("materia", materiaDTO);
+            return modelView;
+    	}
+    	
+    	ModelAndView modelView = new ModelAndView("materias");
         materiaDTO.setEstado(true);
+      //buscamos el docente y la carrera seleccionada
         docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
         carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
+        //seteamos el Objeto a materiaDTO
         materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
         materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+      //guardamos materia en la BD
         materiaService.save(materiaDTO);
-            modelView.addObject("materias", materiaService.findAll());
-            modelView.addObject("titulo", "Materias");
-            modelView.addObject("isAdded", true);
-        return modelView;
-    }
-    
-    */
-    
-    @PostMapping("/guardar-materia")
-    public ModelAndView guardarMateria(@ModelAttribute("materia") MateriaDTO materiaDTO) {
-        ModelAndView modelView = new ModelAndView("materias");
-        materiaDTO.setEstado(true);
-        docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
-        carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
-        materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
-        materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
-        materiaService.save(materiaDTO);
+      //agregamos los atributos necesarios para la vista
         modelView.addObject("materias", materiaService.findAll());
         modelView.addObject("titulo", "Materias");
         modelView.addObject("isAdded", true);
@@ -140,22 +138,6 @@ public class MateriaController {
      * @param id codigo de la materia a editar
      * @return la vista materia-form.html
      */
-    /*
-    @GetMapping("/editar-materia/{id}")    
-    public String getEditarMateriaPage(Model model, @PathVariable(value = "id") Long id) {
-        boolean edicion = true;
-        MateriaDTO materiaEncontrada = new MateriaDTO();
-        materiaEncontrada = materiaService.findById(id);
-        model.addAttribute("titulo", "Materias");
-        model.addAttribute("edicion", edicion);
-        model.addAttribute("materia", materiaEncontrada);
-        model.addAttribute("carreras", carreraService.findAll());
-        model.addAttribute("docentes", docenteService.findAll());
-        return "materia-form";
-    }
-    
-    */
-    
     // directamente asigno el resultado de la busqueda a materiaEncontrada
     
     @GetMapping("/editar-materia/{id}")
@@ -177,12 +159,26 @@ public class MateriaController {
      * @return la vista materias.html
      */
     @PostMapping("modificar-materia")
-    public String modificarMateria(@ModelAttribute("materia") MateriaDTO materiaDTO, RedirectAttributes redirectAttributes) {
+    public String modificarMateria(Model model, @Valid @ModelAttribute("materia") MateriaDTO materiaDTO, BindingResult result,RedirectAttributes redirectAttributes) {
+    	
+    	if(result.hasErrors()) {
+    		
+    		model.addAttribute("titulo", "Editar Materia");
+            model.addAttribute("edicion", true);
+            model.addAttribute("materia", materiaDTO);
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("docentes", docenteService.findAll());
+            
+            return "materia-form";
+    	}
+    	//obtenemos los objetos de carrera y docene seleccionados y los seteamos a materiaDTO
     	docenteDTO = docenteService.findById(materiaDTO.getDocente().getIdDocente());
         carreraDTO = carreraService.findById(materiaDTO.getCarrera().getIdCarrera());
         materiaDTO.setDocente(docenteMapper.toDocente(docenteDTO));  
         materiaDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+        //guardamos en la base de datos
         materiaService.edit(materiaDTO);
+        
         redirectAttributes.addFlashAttribute("isUpdated", true);
         
         return "redirect:/materias/listado";

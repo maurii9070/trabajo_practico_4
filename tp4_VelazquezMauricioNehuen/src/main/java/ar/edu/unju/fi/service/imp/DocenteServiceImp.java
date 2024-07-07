@@ -74,4 +74,9 @@ public class DocenteServiceImp implements IDocenteService {
         return docenteMapper.toDocenteDTO(docente);
     }
 
+	@Override
+	public List<DocenteDTO> findDocentesSinMateria() {
+		return docenteMapper.toDocenteDTOList(docenteRepository.findDocentesSinMateria());
+	}
+
 }

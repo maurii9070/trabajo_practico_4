@@ -5,6 +5,7 @@ package ar.edu.unju.fi.controller;
 import ar.edu.unju.fi.dto.DocenteDTO;
 import ar.edu.unju.fi.service.IDocenteService;
 import ar.edu.unju.fi.service.IMateriaService;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -69,16 +71,23 @@ public class DocenteController {
      * @return la vista docentes.html
      */
     @PostMapping("/guardar-docente")
-    public ModelAndView guardarDocente(@ModelAttribute("carrera") DocenteDTO docenteDTO) {
-        ModelAndView modelView = new ModelAndView("docentes");
-        docenteDTO.setEstado(true);
+    public ModelAndView guardarDocente(@Valid @ModelAttribute("docente") DocenteDTO docenteDTO , BindingResult result) {
         
-        
-        docenteService.save(docenteDTO);
-        modelView.addObject("docentes", docenteService.findAll());
-        modelView.addObject("titulo", "Docentes");
-        modelView.addObject("isAdded", true);
-        return modelView;
+    	if (result.hasErrors()) {
+        	ModelAndView modelView = new ModelAndView("docente-form");
+            modelView.addObject("docente", docenteDTO);
+            modelView.addObject("edicion", false);
+            return modelView;
+        }else {
+        	ModelAndView modelView = new ModelAndView("docentes");
+            docenteDTO.setEstado(true);
+            docenteService.save(docenteDTO);
+            modelView.addObject("docentes", docenteService.findAll());
+            modelView.addObject("titulo", "Docentes");
+            modelView.addObject("isAdded", true);
+            return modelView;
+        }
+    	
     }
 
     /**
@@ -107,8 +116,17 @@ public class DocenteController {
      * @return la vista docentes.html
      */
     @PostMapping("modificar-docente")
-    public String editarDocente(@ModelAttribute("docente") DocenteDTO docenteDTO, RedirectAttributes redirectAttributes) {
+    public String editarDocente(Model model,@Valid @ModelAttribute("docente") DocenteDTO docenteDTO, BindingResult result,RedirectAttributes redirectAttributes) {
         
+    	if (result.hasErrors()) {
+    		   
+    		boolean edicion = true;
+    		model.addAttribute("titulo", "Docentes");
+            model.addAttribute("edicion", edicion);
+    		model.addAttribute("docente", docenteDTO);
+            return "docente-form";
+        }
+    	
     	docenteService.edit(docenteDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/docentes/listado";

@@ -1,6 +1,6 @@
 package ar.edu.unju.fi.controller;
 
-import ar.edu.unju.fi.collections.CollectionAlumno;
+
 import ar.edu.unju.fi.dto.AlumnoDTO;
 import ar.edu.unju.fi.dto.CarreraDTO;
 import ar.edu.unju.fi.mapper.AlumnoMapper;
@@ -10,11 +10,13 @@ import ar.edu.unju.fi.model.Carrera;
 import ar.edu.unju.fi.service.IAlumnoService;
 import ar.edu.unju.fi.service.ICarreraService;
 import ar.edu.unju.fi.service.IMateriaService;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -102,19 +104,32 @@ public class AlumnoController {
     //se agrega modificacion en la generacion de id de alumno
     
     @PostMapping("/guardar-alumno")
-    public ModelAndView guardarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO) {
+    public ModelAndView guardarAlumno(@Valid @ModelAttribute("alumno") AlumnoDTO alumnoDTO, BindingResult result) {
     	
-        ModelAndView modelView = new ModelAndView("alumnos");
-        CarreraDTO carreraDTO = carreraService.findById(alumnoDTO.getCarrera().getIdCarrera());
-        alumnoDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+    	CarreraDTO carreraDTO = carreraService.findById(alumnoDTO.getCarrera().getIdCarrera());
+    	
+    	if (result.hasErrors()) {
+        	ModelAndView modelView = new ModelAndView("alumno-form");
+            modelView.addObject("alumno", alumnoDTO);
+            modelView.addObject("edicion", false);
+            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("titulo","Nuevo Alumno");
+            return modelView;
+    	}else {
+    		ModelAndView modelView = new ModelAndView("alumnos");
+            
+            alumnoDTO.setCarrera(carreraMapper.toCarrera(carreraDTO));
+            
+            alumnoDTO.setEstado(true); // Establecer estado por defecto
+            alumnoService.save(alumnoDTO); // Guardar alumno
+            
+            modelView.addObject("alumnos", alumnoService.findAll());
+            modelView.addObject("titulo", "Alumnos");
+            modelView.addObject("isAdded", true);
+            return modelView;
+    	}
+    	
         
-        alumnoDTO.setEstado(true); // Establecer estado por defecto
-        alumnoService.save(alumnoDTO); // Guardar alumno
-        
-        modelView.addObject("alumnos", alumnoService.findAll());
-        modelView.addObject("titulo", "Alumnos");
-        modelView.addObject("isAdded", true);
-        return modelView;
     }
 
     /**
@@ -133,8 +148,7 @@ public class AlumnoController {
         
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
-        model.addAttribute("alumno", alumnoMapper.toAlumno(alumnoEncontrado) );
-        
+        model.addAttribute("alumno", alumnoEncontrado );
         model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
         
         
@@ -149,15 +163,28 @@ public class AlumnoController {
      * @return la vista alumnos.html
      */
     @PostMapping("modificar-alumno")
-    public String editarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO, RedirectAttributes redirectAttributes) {
+    public String editarAlumno(Model model, @Valid @ModelAttribute("alumno") AlumnoDTO alumnoDTO,BindingResult result, RedirectAttributes redirectAttributes) {
         
+    	CarreraDTO carrera = carreraService.findById(alumnoDTO.getCarrera().getIdCarrera());
+    	
+    	if (result.hasErrors()) {
+    		boolean edicion = true;
+    		model.addAttribute("titulo", "Editar Alumno");
+            model.addAttribute("edicion", edicion);
+            model.addAttribute("alumno", alumnoDTO );
+            model.addAttribute("carreras", carreraService.findAll());
+            return "alumno-form";
+        }
+    	
+    	alumnoDTO.setCarrera(carreraMapper.toCarrera(carrera));
+    	//logica para evitar perder las inscripciones si el alumno tenia previamente
     	if(materiaService.findByAlumno(alumnoDTO.getIdAlumno()).isEmpty()) {
         	alumnoService.edit(alumnoDTO);
         }else {
         	alumnoDTO.setMaterias(materiaService.findByAlumno(alumnoDTO.getIdAlumno()));
         	alumnoService.edit(alumnoDTO);
         }
-    	alumnoService.edit(alumnoDTO);
+    	
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/alumnos/listado";
     }

@@ -52,4 +52,10 @@ public class DocenteServiceImpl implements IDocenteService {
 
 	}
 
+	@Override
+	public List<DocenteDTO> findDocentesSinMateria() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

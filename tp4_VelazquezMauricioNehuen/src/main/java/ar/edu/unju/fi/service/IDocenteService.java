@@ -18,4 +18,5 @@ public interface IDocenteService {
 	
 	void edit(DocenteDTO docenteDTO);
 
+	List<DocenteDTO> findDocentesSinMateria();
 }

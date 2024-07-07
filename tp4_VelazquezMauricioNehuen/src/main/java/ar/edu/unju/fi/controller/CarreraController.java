@@ -4,6 +4,7 @@ package ar.edu.unju.fi.controller;
 import ar.edu.unju.fi.dto.CarreraDTO;
 
 import ar.edu.unju.fi.service.ICarreraService;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -61,14 +63,24 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/guardar-carrera")
-    public ModelAndView guardarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO) {
-        ModelAndView modelView = new ModelAndView("carreras");
-        carreraDTO.setIdCarrera((long) 30);
-        carreraDTO.setEstado(true);
-        carreraService.save(carreraDTO);
-        modelView.addObject("carreras", carreraService.findAll());
-        modelView.addObject("isAdded", true);
-        return modelView;
+    public ModelAndView guardarCarrera(@Valid @ModelAttribute("carrera") CarreraDTO carreraDTO, BindingResult result) {
+        
+    	if (result.hasErrors()) {
+        	ModelAndView modelView = new ModelAndView("carrera-form");
+            modelView.addObject("carrera", carreraDTO);
+            modelView.addObject("edicion", false);
+            modelView.addObject("titulo","Nueva Carrera");
+            return modelView;
+        }else {
+        	ModelAndView modelView = new ModelAndView("carreras");
+            carreraDTO.setEstado(true);
+            carreraService.save(carreraDTO);
+            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("isAdded", true);
+            return modelView;
+        }
+    	
+    	
     }
 
     /**
@@ -96,8 +108,17 @@ public class CarreraController {
      * @return retorna la vista carreras
      */
     @PostMapping("/modificar-carrera")
-    public String editarCarrera(@ModelAttribute("carrera") CarreraDTO carreraDTO, RedirectAttributes redirectAttributes) {
-        carreraService.edit(carreraDTO);
+    public String editarCarrera(Model model, @Valid @ModelAttribute("carrera") CarreraDTO carreraDTO,BindingResult result, RedirectAttributes redirectAttributes) {
+        
+    	if (result.hasErrors()) {
+    		boolean edicion = true;
+    		model.addAttribute("titulo", "Editar Carrera");
+            model.addAttribute("edicion", edicion);
+            model.addAttribute("carrera", carreraDTO );
+            return "carrera-form";
+        }
+    	
+    	carreraService.edit(carreraDTO);
         redirectAttributes.addFlashAttribute("isUpdated", true);
         return "redirect:/carreras/listado";
     }
