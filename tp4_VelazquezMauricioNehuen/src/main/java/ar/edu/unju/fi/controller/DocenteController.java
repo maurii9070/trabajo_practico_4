@@ -43,7 +43,7 @@ public class DocenteController {
     @GetMapping("/listado")
     public String getDocentesPage(Model model) {
         model.addAttribute("titulo", "Docentes");
-        model.addAttribute("docentes", docenteService.findAll());
+        model.addAttribute("docentes", docenteService.findByEstado(true));
         return "docentes";
     }
 
@@ -59,8 +59,6 @@ public class DocenteController {
         model.addAttribute("titulo", "Docentes");
         model.addAttribute("edicion", edicion);
         model.addAttribute("docente", docenteDTO);
-        //se agrega materia
-        model.addAttribute("materias", materiaService.findAll());
         return "docente-form";
     }
 
@@ -82,7 +80,7 @@ public class DocenteController {
         	ModelAndView modelView = new ModelAndView("docentes");
             docenteDTO.setEstado(true);
             docenteService.save(docenteDTO);
-            modelView.addObject("docentes", docenteService.findAll());
+            modelView.addObject("docentes", docenteService.findByEstado(true));
             modelView.addObject("titulo", "Docentes");
             modelView.addObject("isAdded", true);
             return modelView;

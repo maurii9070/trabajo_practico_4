@@ -30,16 +30,14 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public List<DocenteDTO> findAll() {
-		//return docenteMapper.toDocenteDTOList(docenteRepository.findAll());
-		List<Docente> docentes = docenteRepository.findAll();
-        return docentes.stream().map(this::convertToDTO).collect(Collectors.toList());
+		return docenteMapper.toDocenteDTOList(docenteRepository.findAll());
+		
 	}
 
 	@Override
 	public DocenteDTO findById(Long id) {
-		//return docenteMapper.toDocenteDTO(docenteRepository.findById(id).get());
-		Docente docente = docenteRepository.findById(id).orElseThrow(() -> new RuntimeException("Docente no encontrado"));
-        return convertToDTO(docente);
+		return docenteMapper.toDocenteDTO(docenteRepository.findById(id).get());
+		
 	}
 
 	@Override
@@ -49,8 +47,7 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public void deleteById(Long id) {
-		//Docente docente = docenteRepository.findById(id).get();
-		Docente docente = docenteRepository.findById(id).orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+		Docente docente = docenteRepository.findById(id).get();
 		docente.setEstado(false);
 		docenteRepository.save(docente);
 		
@@ -58,25 +55,21 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public void edit(DocenteDTO docenteDTO) {
-		
-        if (docenteDTO.getIdDocente() == null) {
-            throw new RuntimeException("El ID del docente no puede ser nulo");
-        }
-        if (docenteRepository.existsById(docenteDTO.getIdDocente())) {
-        	docenteRepository.save(docenteMapper.toDocente(docenteDTO));
-        } else {
-            throw new RuntimeException("Docente no encontrado");
-        }
+		Docente docente=docenteRepository.save(docenteMapper.toDocente(docenteDTO));
 		
 	}
 	
-	private DocenteDTO convertToDTO(Docente docente) {
-        return docenteMapper.toDocenteDTO(docente);
-    }
+	
 
 	@Override
 	public List<DocenteDTO> findDocentesSinMateria() {
 		return docenteMapper.toDocenteDTOList(docenteRepository.findDocentesSinMateria());
+	}
+
+	@Override
+	public List<DocenteDTO> findByEstado(boolean estado) {
+		List<DocenteDTO> docentesDtos = docenteMapper.toDocenteDTOList(docenteRepository.findByEstado(estado));
+		return docentesDtos;
 	}
 
 }

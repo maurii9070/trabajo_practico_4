@@ -148,7 +148,7 @@ public class MateriaController {
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaEncontrada);
         model.addAttribute("carreras", carreraService.findByEstado(true));
-        model.addAttribute("docentes", docenteService.findAll());
+        model.addAttribute("docentes", docenteService.findByEstado(true));
         return "materia-form";
     }
 
@@ -167,7 +167,7 @@ public class MateriaController {
             model.addAttribute("edicion", true);
             model.addAttribute("materia", materiaDTO);
             model.addAttribute("carreras", carreraService.findByEstado(true));
-            model.addAttribute("docentes", docenteService.findAll());
+            model.addAttribute("docentes", docenteService.findByEstado(true));
             
             return "materia-form";
     	}

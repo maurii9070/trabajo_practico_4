@@ -58,4 +58,10 @@ public class DocenteServiceImpl implements IDocenteService {
 		return null;
 	}
 
+	@Override
+	public List<DocenteDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

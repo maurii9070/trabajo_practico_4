@@ -17,6 +17,8 @@ public interface IDocenteService {
 	void deleteById(Long id);
 	
 	void edit(DocenteDTO docenteDTO);
+	
+	List<DocenteDTO> findByEstado(boolean estado);
 
 	List<DocenteDTO> findDocentesSinMateria();
 }
