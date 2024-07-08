@@ -23,10 +23,15 @@
                             th:class="'form-control ' + ${edicion ? 'form-control opacity-75' : ''}"
                             id="codigo"
                             name="codigo"
-                            required
                             th:field="*{codigo}"
                             th:readonly="${edicion}"
+                            th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''"
                         />
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('codigo')}" 
+							th:errors="*{codigo}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -35,9 +40,14 @@
                             class="form-control"
                             id="nombre"
                             name="nombre"
-                            required
                             th:field="*{nombre}"
+                            th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('nombre')}" 
+							th:errors="*{nombre}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="carrera" class="form-label">Carrera</label>
@@ -62,7 +72,6 @@
                             class="form-select"
                             id="curso"
                             name="curso"
-                            required
                             th:field="*{curso}"
                         >
                             <option value="" selected>-- Seleccione un Curso --</option>
@@ -72,6 +81,11 @@
                             <option value="CUARTO">Cuarto</option>
                             <option value="QUINTO">Quinto</option>
                         </select>
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('curso')}" 
+							th:errors="*{curso}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="horas" class="form-label">Cant. Horas</label>
@@ -80,10 +94,14 @@
                             class="form-control"
                             id="horas"
                             name="horas"
-                            min="1"
-                            required
                             th:field="*{cantidadHoras}"
+                            th:classappend="${#fields.hasErrors('cantidadHoras')} ? 'is-invalid' : ''"
                         >
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('cantidadHoras')}" 
+							th:errors="*{cantidadHoras}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="modalidad" class="form-label">Modalidad</label>
@@ -91,13 +109,17 @@
                             class="form-select"
                             id="modalidad"
                             name="modalidad"
-                            required
                             th:field="${materia.modalidad}"
                         >
                             <option value="">-- Seleccione una modalidad --</option>
                             <option value="presencial">Presencial</option>
                             <option value="virtual">Virtual</option>
                         </select>
+                        <p 
+                        	class="form-text text-danger"
+							th:if="${#fields.hasErrors('modalidad')}" 
+							th:errors="*{modalidad}">
+						</p>
                     </div>
                     <div class="mb-3">
                         <label for="docentes" class="form-label">Docente</label>
@@ -108,7 +130,7 @@
                             required
                             th:field="*{docente.legajo}"
                         >
-                            <option value="">-- Seleccione una modalidad --</option>
+                            <option value="">-- Seleccione un Docente --</option>
                             <option
                                 th:each="docente : ${docentes}"
                                 th:value="${docente.legajo}"
@@ -117,6 +139,40 @@
                             ></option>
                         </select>
                     </div>
+                    
+                    
+                     <div th:if="${edicion}" class="mb-3">
+                        <label>Estado</label>
+                        <div class="d-flex justify-content-between" style="max-width: 200px">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault1"
+                                    value="true"
+                                    th:field="*{estado}"
+                                >
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Activa
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault2"
+                                    value="false"
+                                    th:field="*{estado}"
+                                >
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Inactiva
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <button
                         type="submit"
                         class="btn btn-primary"

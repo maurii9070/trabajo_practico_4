@@ -43,4 +43,16 @@ public class MateriaServiceImpl implements IMateriaService {
 		CollectionMateria.modificarMateria(materiaMapper.toMateria(materiaDTO));
 	}
 
+	@Override
+	public List<MateriaDTO> findByAlumno(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MateriaDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

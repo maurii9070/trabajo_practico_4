@@ -15,5 +15,7 @@ public interface ICarreraService {
 	void deleteById(String codigo);
 	 
 	void edit(CarreraDTO carreraDTO);
+	
+	List<CarreraDTO> findByEstado(boolean estado);
 
 }
