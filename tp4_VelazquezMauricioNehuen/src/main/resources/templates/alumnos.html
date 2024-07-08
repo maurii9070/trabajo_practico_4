@@ -20,10 +20,7 @@
                 Alumno modificado correctamente
             </div>
 
-            <div th:if="${alumnos.isEmpty()}" class="alert alert-warning text-center fw-bold">
-                No hay alumnos cargados. Puede cargar un nuevo alumno haciendo click en el botón "Nuevo Alumno".
-            </div>
-            <table class="table table-striped" th:unless="${alumnos.isEmpty()}">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">L.U</th>

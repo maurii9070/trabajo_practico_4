@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 public class CollectionAlumno {
@@ -21,12 +20,12 @@ public class CollectionAlumno {
      */
     public static List<Alumno> getAlumnos() {
         if (alumnos.isEmpty()) {
-            alumnos.add(new Alumno((long) 1,"40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
-                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853",true, null,  null));
-            alumnos.add(new Alumno((long)2,"40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
-                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "APU8363",true, null, null));
-            alumnos.add(new Alumno((long)3,"40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
-                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "APU1234",true, null,  null));
+            alumnos.add(new Alumno("40565353", "Mauricio", "Velazquez", "mauricio@correo.com", "388412345",
+                    LocalDate.of(1996, 10, 29), "Av. San Martin 123", "APU4853"));
+            alumnos.add(new Alumno("40564234", "Cristian", "Alvarez", "cristian@correo.com", "388412345",
+                    LocalDate.of(2001, 5, 13), "Av. Perez 123", "APU8363"));
+            alumnos.add(new Alumno("40347047", "Patricio", "Rey", "patricio@correo.com", "388412345",
+                    LocalDate.of(1998, 3, 15), "Av. Fascio 666", "APU1234"));
         }
         return alumnos;
     }
@@ -39,15 +38,18 @@ public class CollectionAlumno {
     public static boolean agregarAlumno(Alumno alumno) {
         alumnos.add(alumno);
         	return true;
+        
+    	
+        
     }
 
     /**
      * Elimina un objeto de la clase Alumno en el arrayList
      *
-     * @param id Objeto de la clase Alumno con atributos modificados
+     * @param dni Objeto de la clase Alumno con atributos modificados
      */
-    public static void eliminarAlumno(Long id) {
-        alumnos.removeIf(alumno -> alumno.getIdAlumno().equals(id));
+    public static void eliminarAlumno(String dni) {
+        alumnos.removeIf(alumno -> alumno.getDni().equals(dni));
     }
 
     /**
@@ -72,11 +74,11 @@ public class CollectionAlumno {
     /**
      * Busca un objeto de la clase Alumno en el arrayList
      *
-     * @param id Objeto de la clase Alumno
+     * @param dni Objeto de la clase Alumno
      * @return Objeto de la clase Alumno
      */
-    public static Alumno buscarAlumno(Long id) {
-        Predicate<Alumno> filterCodigo = alumno -> alumno.getIdAlumno().equals(id);
+    public static Alumno buscarAlumno(String dni) {
+        Predicate<Alumno> filterCodigo = alumno -> alumno.getDni().equals(dni);
         Optional<Alumno> alumno = alumnos.stream().filter(filterCodigo).findFirst();
         return alumno.orElse(null);
     }

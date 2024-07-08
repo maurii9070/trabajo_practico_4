@@ -15,8 +15,5 @@ public interface IDocenteService {
 	void deleteById(String legajo);
 	
 	void edit(DocenteDTO docenteDTO);
-	
-	List<DocenteDTO> findByEstado(boolean estado);
 
-	List<DocenteDTO> findDocentesSinMateria();
 }

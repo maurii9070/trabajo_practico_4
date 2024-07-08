@@ -19,11 +19,7 @@
             <div th:if="${isUpdated}" id="alertEdit" class="alert alert-primary" role="alert">
                 Materia modificada correctamente
             </div>
-
-            <div th:if="${carreras.isEmpty()}" class="alert alert-warning text-center fw-bold">
-                No hay carreras cargadas. Puede cargar una nueva carrera haciendo click en el botón "Nueva Carrera".
-            </div>
-            <table class="table table-striped" th:unless="${carreras.isEmpty()}">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Codigo</th>

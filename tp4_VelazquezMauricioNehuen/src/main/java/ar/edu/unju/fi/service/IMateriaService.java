@@ -14,8 +14,4 @@ public interface IMateriaService {
 	void deleteById(String codigo);
 	
 	void edit(MateriaDTO materiaDTO);
-	
-	List<MateriaDTO> findByAlumno(Long id);
-	
-	List<MateriaDTO> findByEstado(boolean estado);
 }
