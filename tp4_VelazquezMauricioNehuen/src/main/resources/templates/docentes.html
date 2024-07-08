@@ -20,7 +20,10 @@
                 Docente modificado correctamente
             </div>
 
-            <table class="table table-striped">
+            <div th:if="${docentes.isEmpty()}" class="alert alert-warning text-center fw-bold">
+                No hay docentes cargados. Puede cargar un nuevo docente haciendo click en el botón "Nuevo Docente".
+            </div>
+            <table class="table table-striped" th:unless="${docentes.isEmpty()}">
                 <thead>
                     <tr>
                         <th scope="col">Legajo</th>
