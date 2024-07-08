@@ -74,7 +74,7 @@ public class MateriaController {
     @GetMapping("/listado")
     public String getMateriasPage(Model model) {
         model.addAttribute("titulo", "Materias");
-        model.addAttribute("materias", materiaService.findAll());
+        model.addAttribute("materias", materiaService.findByEstado(true));
         return "materias";
     }
 
@@ -125,7 +125,7 @@ public class MateriaController {
       //guardamos materia en la BD
         materiaService.save(materiaDTO);
       //agregamos los atributos necesarios para la vista
-        modelView.addObject("materias", materiaService.findAll());
+        modelView.addObject("materias",materiaService.findByEstado(true));
         modelView.addObject("titulo", "Materias");
         modelView.addObject("isAdded", true);
         return modelView;

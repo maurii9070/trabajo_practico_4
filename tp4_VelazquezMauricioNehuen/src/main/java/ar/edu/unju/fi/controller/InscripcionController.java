@@ -36,7 +36,7 @@ public class InscripcionController {
 	
 	@GetMapping("/carreras")
     public String formInscripciones(Model model) {
-		model.addAttribute("materias", materiaService.findAll());
+		model.addAttribute("materias", materiaService.findByEstado(true));
         model.addAttribute("titulo", "Inscripciones");
         model.addAttribute("alumno", alumnoDTO);
         return "inscripcionAlumno";

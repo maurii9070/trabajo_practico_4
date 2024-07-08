@@ -53,4 +53,10 @@ public class MateriaServiceImpl implements IMateriaService {
 		return null;
 	}
 
+	@Override
+	public List<MateriaDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
