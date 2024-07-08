@@ -58,4 +58,10 @@ public class AlumnoServiceImp implements IAlumnoService {
 	public List<AlumnoDTO> findByMateria(Long id) {
 		return alumnoMapper.toAlumnoDTOList(alumnoRepository.findByMateria(id));
 	}
+
+	@Override
+	public List<AlumnoDTO> findByEstado(boolean estado) {
+		List<AlumnoDTO> alumnos= alumnoMapper.toAlumnoDTOList(alumnoRepository.findByEstado(estado));
+		return alumnos;
+	}
 }

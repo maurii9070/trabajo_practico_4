@@ -36,7 +36,7 @@ public class InscripcionController {
 	
 	@GetMapping("/carreras")
     public String formInscripciones(Model model) {
-		model.addAttribute("materias", materiaService.findAll());
+		model.addAttribute("materias", materiaService.findByEstado(true));
         model.addAttribute("titulo", "Inscripciones");
         model.addAttribute("alumno", alumnoDTO);
         return "inscripcionAlumno";
@@ -44,7 +44,7 @@ public class InscripcionController {
 	
 	@PostMapping("/inscribir")
 	public String editarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO, @RequestParam("MateriaID") Long materiaId, RedirectAttributes redirectAttributes) {
-		List<AlumnoDTO> alumnos = alumnoService.findAll();
+		List<AlumnoDTO> alumnos = alumnoService.findByEstado(true);
 		for (AlumnoDTO a : alumnos) {
             if (a.getLu().equals(alumnoDTO.getLu())) {
             	//alumnoDTO = a;

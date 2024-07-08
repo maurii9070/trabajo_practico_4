@@ -60,4 +60,10 @@ public class AlumnoServiceImpl implements IAlumnoService {
 		return null;
 	}
 
+	@Override
+	public List<AlumnoDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

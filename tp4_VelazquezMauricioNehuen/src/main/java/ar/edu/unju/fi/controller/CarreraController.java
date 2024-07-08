@@ -37,7 +37,7 @@ public class CarreraController {
     @GetMapping("/listado")
     public String getCarrerasPage(Model model) {
         model.addAttribute("titulo", "Carreras");
-        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("carreras", carreraService.findByEstado(true));
         return "carreras";
     }
 
@@ -75,7 +75,7 @@ public class CarreraController {
         	ModelAndView modelView = new ModelAndView("carreras");
             carreraDTO.setEstado(true);
             carreraService.save(carreraDTO);
-            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("carreras", carreraService.findByEstado(true));
             modelView.addObject("isAdded", true);
             return modelView;
         }

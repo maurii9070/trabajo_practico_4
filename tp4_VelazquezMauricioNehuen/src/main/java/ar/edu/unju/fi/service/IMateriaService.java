@@ -18,4 +18,6 @@ public interface IMateriaService {
 	void edit(MateriaDTO materiaDTO);
 	
 	List<MateriaDTO> findByAlumno(Long id);
+	
+	List<MateriaDTO> findByEstado(boolean estado);
 }

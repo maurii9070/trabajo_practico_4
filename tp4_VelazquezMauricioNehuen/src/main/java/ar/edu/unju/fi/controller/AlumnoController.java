@@ -53,7 +53,7 @@ public class AlumnoController {
     @GetMapping("/listado")
     public String getAlumnosPage(Model model) {
         model.addAttribute("titulo", "Alumnos");
-        model.addAttribute("alumnos", alumnoService.findAll());
+        model.addAttribute("alumnos", alumnoService.findByEstado(true));
         return "alumnos";
     }
 
@@ -72,7 +72,7 @@ public class AlumnoController {
         //model.addAttribute("alumno", alumnoDTO);
         model.addAttribute("alumno", new AlumnoDTO());
         
-        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        model.addAttribute("carreras", carreraService.findByEstado(true)); // Añadir carreras para el formulario
         
         return "alumno-form";
     }
@@ -83,23 +83,6 @@ public class AlumnoController {
      * @param alumnoDTO objeto que representa un alumno
      * @return la vista alumnos.html
      */
-   /* @PostMapping("/guardar-alumno")
-    public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
-        ModelAndView modelView = new ModelAndView("alumnos");
-        // Set ID
-        alumnoDTO.setIdAlumno((long)20);
-        alumnoDTO.setEstado(true);
-        Alumno alumnoResultado= alumnoService.save(alumnoDTO);
-        
-        modelView.addObject("alumnos", alumnoService.findAll());
-        modelView.addObject("titulo", "Alumnos");
-        modelView.addObject("isAdded", true);
-        
-        System.out.println(alumnoService.findAll());
-        return modelView;
-    }
-    
-    */
     
     //se agrega modificacion en la generacion de id de alumno
     
@@ -112,7 +95,7 @@ public class AlumnoController {
         	ModelAndView modelView = new ModelAndView("alumno-form");
             modelView.addObject("alumno", alumnoDTO);
             modelView.addObject("edicion", false);
-            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("carreras",  carreraService.findByEstado(true));
             modelView.addObject("titulo","Nuevo Alumno");
             return modelView;
     	}else {
@@ -123,7 +106,7 @@ public class AlumnoController {
             alumnoDTO.setEstado(true); // Establecer estado por defecto
             alumnoService.save(alumnoDTO); // Guardar alumno
             
-            modelView.addObject("alumnos", alumnoService.findAll());
+            modelView.addObject("alumnos", alumnoService.findByEstado(true));
             modelView.addObject("titulo", "Alumnos");
             modelView.addObject("isAdded", true);
             return modelView;
@@ -149,7 +132,7 @@ public class AlumnoController {
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
         model.addAttribute("alumno", alumnoEncontrado );
-        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        model.addAttribute("carreras",  carreraService.findByEstado(true)); // Añadir carreras para el formulario
         
         
         return "alumno-form";
@@ -172,7 +155,7 @@ public class AlumnoController {
     		model.addAttribute("titulo", "Editar Alumno");
             model.addAttribute("edicion", edicion);
             model.addAttribute("alumno", alumnoDTO );
-            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("carreras",  carreraService.findByEstado(true));
             return "alumno-form";
         }
     	

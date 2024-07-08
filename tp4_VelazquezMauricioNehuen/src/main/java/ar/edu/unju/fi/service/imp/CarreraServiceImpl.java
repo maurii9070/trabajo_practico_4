@@ -53,6 +53,12 @@ public class CarreraServiceImpl implements ICarreraService {
 		CollectionCarrera.modificarCarrera(carreraMapper.toCarrera(carreraDTO));
 	}
 
+	@Override
+	public List<CarreraDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

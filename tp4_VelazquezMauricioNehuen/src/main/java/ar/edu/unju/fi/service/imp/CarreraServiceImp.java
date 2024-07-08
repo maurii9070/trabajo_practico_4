@@ -28,20 +28,15 @@ public class CarreraServiceImp implements ICarreraService {
 		return carrerasDtos;
 	}
 
-	/* @Override
+	@Override
 	public CarreraDTO findById(Long id) {
 		CarreraDTO carreraDTO = carreraMapper.toCarreraDTO(carreraRepository.findById(id).get());
 		return carreraDTO;
 	}
 	
-	*/
+
 	
-	@Override
-    public CarreraDTO findById(Long id) {
-        Carrera carrera = carreraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
-        return carreraMapper.toCarreraDTO(carrera);
-    }
+	
 	
 	
 	@Override
@@ -50,31 +45,18 @@ public class CarreraServiceImp implements ICarreraService {
 	}
 
 
-	/*
+	
 	@Override
 	public void edit(CarreraDTO carreraDTO) {
 		carreraRepository.save(carreraMapper.toCarrera(carreraDTO));
 
 	}
-	*/
 	
-	// pruebaaaaaaa
 	
+	
+
+
 	@Override
-	public void edit(CarreraDTO carreraDTO) {
-	    Carrera carrera = carreraMapper.toCarrera(carreraDTO);
-	    if (carrera.getIdCarrera() == null) {
-	        throw new RuntimeException("El ID de la carrera no puede ser nulo");
-	    }
-	    if (carreraRepository.existsById(carrera.getIdCarrera())) {
-	        carreraRepository.save(carrera);
-	    } else {
-	        throw new RuntimeException("Carrera no encontrada");
-	    }
-	}
-
-
-	/* @Override
 	public void deleteById(Long id) {
 		Carrera carrera = carreraRepository.findById(id).get();
 		carrera.setEstado(false);
@@ -82,14 +64,14 @@ public class CarreraServiceImp implements ICarreraService {
 		
 	}
 	
-	*/
+
 	
+	
+
 	@Override
-    public void deleteById(Long id) {
-        Carrera carrera = carreraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
-        carrera.setEstado(false); 
-        carreraRepository.save(carrera);
-    }
+	public List<CarreraDTO> findByEstado(boolean estado) {
+		List<CarreraDTO> carrerasDtos = carreraMapper.toCarreraDTOList(carreraRepository.findByEstado(estado));
+		return carrerasDtos;
+	}
 	
 }

@@ -55,4 +55,10 @@ public class MateriaServiceImp implements IMateriaService {
 	public List<MateriaDTO> findByAlumno(Long id) {
 		return materiaMapper.toMateriaDTOList(materiaRepository.findByAlumnoId(id));
 	}
+
+	@Override
+	public List<MateriaDTO> findByEstado(boolean estado) {
+		List<MateriaDTO> materiasDtos =materiaMapper.toMateriaDTOList(materiaRepository.findByEstado(estado));
+		return materiasDtos;
+	}
 }

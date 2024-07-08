@@ -11,6 +11,9 @@ import ar.edu.unju.fi.model.Docente;
 @Repository
 public interface DocenteRepository extends JpaRepository<Docente, Long> {
 
+	@Query(value = "SELECT * FROM docentes WHERE doc_estado = ?1", nativeQuery = true)
+    List<Docente> findByEstado(boolean estado);
+	
 	@Query("SELECT d FROM Docente d WHERE d.idDocente NOT IN (SELECT m.docente.idDocente FROM Materia m) AND d.estado = true")
     List<Docente> findDocentesSinMateria();
 }
