@@ -31,7 +31,7 @@ public class ConsultaController {
 	@GetMapping("/alumnos")
     public String formInscripciones(Model model) {
 		model.addAttribute("materias", materiaService.findAll());
-		model.addAttribute("carreras", carreraService.findAll());
+		model.addAttribute("carreras",  carreraService.findByEstado(true));
         model.addAttribute("titulo", "Consultas");
         model.addAttribute("nombre", false);
         model.addAttribute("texto","");
@@ -56,8 +56,9 @@ public class ConsultaController {
 	
 	@GetMapping("/carrera/{id}") 
 	public String listaAlumnosCarr (Model model, @PathVariable(value = "id") Long id) {
+		
 		model.addAttribute("materias", materiaService.findAll());
-		model.addAttribute("carreras", carreraService.findAll());
+		model.addAttribute("carreras",  carreraService.findByEstado(true));
 		model.addAttribute("alumnos", alumnoService.findByCarrera(id));
 		model.addAttribute("titulo", "Alumnos");
 		model.addAttribute("nombre", true);
@@ -68,7 +69,7 @@ public class ConsultaController {
 	@GetMapping("/materia/{id}")
 	public String listaAlumnosMateria (Model model, @PathVariable(value = "id") Long id) {
 		model.addAttribute("materias", materiaService.findAll());
-		model.addAttribute("carreras", carreraService.findAll());
+		model.addAttribute("carreras", carreraService.findByEstado(true));
 		model.addAttribute("alumnos", alumnoService.findByMateria(id));
 		model.addAttribute("titulo", "Alumnos");
 		model.addAttribute("nombre", true);

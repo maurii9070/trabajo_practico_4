@@ -72,7 +72,7 @@ public class AlumnoController {
         //model.addAttribute("alumno", alumnoDTO);
         model.addAttribute("alumno", new AlumnoDTO());
         
-        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        model.addAttribute("carreras", carreraService.findByEstado(true)); // Añadir carreras para el formulario
         
         return "alumno-form";
     }
@@ -95,7 +95,7 @@ public class AlumnoController {
         	ModelAndView modelView = new ModelAndView("alumno-form");
             modelView.addObject("alumno", alumnoDTO);
             modelView.addObject("edicion", false);
-            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("carreras",  carreraService.findByEstado(true));
             modelView.addObject("titulo","Nuevo Alumno");
             return modelView;
     	}else {
@@ -132,7 +132,7 @@ public class AlumnoController {
         model.addAttribute("titulo", "Alumnos");
         model.addAttribute("edicion", edicion);
         model.addAttribute("alumno", alumnoEncontrado );
-        model.addAttribute("carreras", carreraService.findAll()); // Añadir carreras para el formulario
+        model.addAttribute("carreras",  carreraService.findByEstado(true)); // Añadir carreras para el formulario
         
         
         return "alumno-form";
@@ -155,7 +155,7 @@ public class AlumnoController {
     		model.addAttribute("titulo", "Editar Alumno");
             model.addAttribute("edicion", edicion);
             model.addAttribute("alumno", alumnoDTO );
-            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("carreras",  carreraService.findByEstado(true));
             return "alumno-form";
         }
     	

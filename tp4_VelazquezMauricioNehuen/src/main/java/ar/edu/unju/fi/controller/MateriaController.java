@@ -90,7 +90,7 @@ public class MateriaController {
         model.addAttribute("titulo", "Nueva Materia");
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaDTO);
-        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("carreras", carreraService.findByEstado(true));
         model.addAttribute("docentes", docenteService.findDocentesSinMateria());
         return "materia-form";
     }
@@ -107,7 +107,7 @@ public class MateriaController {
 
     		ModelAndView modelView = new ModelAndView("materia-form");
             modelView.addObject("titulo", "Nueva Materia");
-            modelView.addObject("carreras", carreraService.findAll());
+            modelView.addObject("carreras", carreraService.findByEstado(true));
             modelView.addObject("docentes", docenteService.findDocentesSinMateria());
             modelView.addObject("edicion", false);
             modelView.addObject("materia", materiaDTO);
@@ -147,7 +147,7 @@ public class MateriaController {
         model.addAttribute("titulo", "Materias");
         model.addAttribute("edicion", edicion);
         model.addAttribute("materia", materiaEncontrada);
-        model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("carreras", carreraService.findByEstado(true));
         model.addAttribute("docentes", docenteService.findAll());
         return "materia-form";
     }
@@ -166,7 +166,7 @@ public class MateriaController {
     		model.addAttribute("titulo", "Editar Materia");
             model.addAttribute("edicion", true);
             model.addAttribute("materia", materiaDTO);
-            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("carreras", carreraService.findByEstado(true));
             model.addAttribute("docentes", docenteService.findAll());
             
             return "materia-form";
