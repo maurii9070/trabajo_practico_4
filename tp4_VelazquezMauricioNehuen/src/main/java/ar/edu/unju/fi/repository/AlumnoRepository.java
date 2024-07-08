@@ -15,6 +15,9 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 	@Query(value = "SELECT * FROM alumnos WHERE car_id = ?1", nativeQuery = true)
     List<Alumno> findByCarrera(Long id);
 	
+	@Query(value = "SELECT * FROM alumnos WHERE alu_estado = ?1", nativeQuery = true)
+    List<Alumno> findByEstado(boolean estado);
+	
     @Query(value = "SELECT a.*\r\n"
     		+ "FROM alumnos a\r\n"
     		+ "JOIN alumnos_materias am ON a.alu_id = am.alu_id\r\n"

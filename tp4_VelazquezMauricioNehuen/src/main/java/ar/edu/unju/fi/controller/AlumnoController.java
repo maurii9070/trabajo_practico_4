@@ -53,7 +53,7 @@ public class AlumnoController {
     @GetMapping("/listado")
     public String getAlumnosPage(Model model) {
         model.addAttribute("titulo", "Alumnos");
-        model.addAttribute("alumnos", alumnoService.findAll());
+        model.addAttribute("alumnos", alumnoService.findByEstado(true));
         return "alumnos";
     }
 
@@ -83,23 +83,6 @@ public class AlumnoController {
      * @param alumnoDTO objeto que representa un alumno
      * @return la vista alumnos.html
      */
-   /* @PostMapping("/guardar-alumno")
-    public ModelAndView guardarAlumno(@ModelAttribute("carrera") AlumnoDTO alumnoDTO) {
-        ModelAndView modelView = new ModelAndView("alumnos");
-        // Set ID
-        alumnoDTO.setIdAlumno((long)20);
-        alumnoDTO.setEstado(true);
-        Alumno alumnoResultado= alumnoService.save(alumnoDTO);
-        
-        modelView.addObject("alumnos", alumnoService.findAll());
-        modelView.addObject("titulo", "Alumnos");
-        modelView.addObject("isAdded", true);
-        
-        System.out.println(alumnoService.findAll());
-        return modelView;
-    }
-    
-    */
     
     //se agrega modificacion en la generacion de id de alumno
     
@@ -123,7 +106,7 @@ public class AlumnoController {
             alumnoDTO.setEstado(true); // Establecer estado por defecto
             alumnoService.save(alumnoDTO); // Guardar alumno
             
-            modelView.addObject("alumnos", alumnoService.findAll());
+            modelView.addObject("alumnos", alumnoService.findByEstado(true));
             modelView.addObject("titulo", "Alumnos");
             modelView.addObject("isAdded", true);
             return modelView;

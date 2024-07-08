@@ -44,7 +44,7 @@ public class InscripcionController {
 	
 	@PostMapping("/inscribir")
 	public String editarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO, @RequestParam("MateriaID") Long materiaId, RedirectAttributes redirectAttributes) {
-		List<AlumnoDTO> alumnos = alumnoService.findAll();
+		List<AlumnoDTO> alumnos = alumnoService.findByEstado(true);
 		for (AlumnoDTO a : alumnos) {
             if (a.getLu().equals(alumnoDTO.getLu())) {
             	//alumnoDTO = a;

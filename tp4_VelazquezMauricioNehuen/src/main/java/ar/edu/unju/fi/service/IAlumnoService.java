@@ -21,4 +21,6 @@ public interface IAlumnoService {
 	List<AlumnoDTO> findByCarrera(Long id);
 
 	List<AlumnoDTO> findByMateria(Long id);
+	
+	List<AlumnoDTO> findByEstado(boolean estado);
 }
