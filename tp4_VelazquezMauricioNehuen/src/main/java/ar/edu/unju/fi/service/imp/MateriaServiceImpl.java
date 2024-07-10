@@ -1,15 +1,19 @@
 package ar.edu.unju.fi.service.imp;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unju.fi.collections.CollectionAlumno;
 import ar.edu.unju.fi.collections.CollectionMateria;
 import ar.edu.unju.fi.dto.MateriaDTO;
 import ar.edu.unju.fi.mapper.MateriaMapper;
+import ar.edu.unju.fi.model.Materia;
 import ar.edu.unju.fi.service.IMateriaService;
-@Service
+
+@Service("materiaServiceCollection")
 public class MateriaServiceImpl implements IMateriaService {
 
 	@Autowired
@@ -22,25 +26,37 @@ public class MateriaServiceImpl implements IMateriaService {
 	}
 
 	@Override
-	public MateriaDTO findById(String codigo) {
-		MateriaDTO materiaDTO = materiaMapper.toMateriaDTO(CollectionMateria.buscarMateria(codigo));
+	public MateriaDTO findById(Long id) {
+		MateriaDTO materiaDTO = materiaMapper.toMateriaDTO(CollectionMateria.buscarMateria(id));
 		return materiaDTO;
 	}
 
 	@Override
-	public boolean save(MateriaDTO materiaDTO) {
-		boolean respuesta = CollectionMateria.agregarMateria(materiaMapper.toMateria(materiaDTO));
-		return respuesta;
+	public Materia save(MateriaDTO materiaDTO) {
+		CollectionMateria.agregarMateria(materiaMapper.toMateria(materiaDTO));
+		return CollectionMateria.buscarMateria(materiaDTO.getIdMateria());
 	}
 
 	@Override
-	public void deleteById(String codigo) {
-		CollectionMateria.eliminarMateria(codigo);
+	public void deleteById(Long id) {
+		CollectionMateria.eliminarMateria(id);
 	}
 
 	@Override
 	public void edit(MateriaDTO materiaDTO) {
 		CollectionMateria.modificarMateria(materiaMapper.toMateria(materiaDTO));
+	}
+
+	@Override
+	public List<MateriaDTO> findByAlumno(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MateriaDTO> findByEstado(boolean estado) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

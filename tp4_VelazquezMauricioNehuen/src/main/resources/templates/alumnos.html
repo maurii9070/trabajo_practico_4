@@ -20,7 +20,10 @@
                 Alumno modificado correctamente
             </div>
 
-            <table class="table table-striped">
+            <div th:if="${alumnos.isEmpty()}" class="alert alert-warning text-center fw-bold">
+                No hay alumnos cargados. Puede cargar un nuevo alumno haciendo click en el botón "Nuevo Alumno".
+            </div>
+            <table class="table table-striped" th:unless="${alumnos.isEmpty()}">
                 <thead>
                     <tr>
                         <th scope="col">L.U</th>
@@ -28,6 +31,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Email</th>
                         <th scope="col">Fecha Nacimiento</th>
+                        <th scope="col">Carrera</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -38,15 +42,17 @@
                         <td th:text="${alumno.apellido}"></td>
                         <td th:text="${alumno.email}"></td>
                         <td th:text="${alumno.fechaNacimiento}"></td>
+                        <td th:text="${alumno.carrera != null ? alumno.carrera.nombre : 'Sin carrera asignada'}"></td>
                         <td>
                             <a
                                 class="btn btn-warning"
-                                th:href="@{/alumnos/editar-alumno/{dni}(dni=${alumno.dni})}"
+                                th:href="@{/alumnos/editar-alumno/{id}(id=${alumno.idAlumno})}"
                             >Editar</a>
                             <a
                                 class="btn btn-danger"
-                                th:data-id="${alumno.dni}"
-                                onclick="confirmDelete(this.getAttribute('data-id'))"
+                                th:data-id="${alumno.idAlumno}"
+                                th:data-dni="${alumno.dni}"
+                                onclick="confirmDelete(this.getAttribute('data-id'),this.getAttribute('data-dni'))"
                             >Eliminar</a>
                         </td>
                     </tr>
@@ -62,9 +68,9 @@
              * Confirmar eliminación de un alumno
              * @param dni
              */
-            function confirmDelete(dni) {
+            function confirmDelete(id,dni) {
                 if (confirm('¿Está seguro que desea eliminar el alumno con DNI ' + dni + '?')) {
-                    window.location.href = '/alumnos/eliminar-alumno/' + dni;
+                    window.location.href = '/alumnos/eliminar-alumno/' + id;
                 }
             }
 
